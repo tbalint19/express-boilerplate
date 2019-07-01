@@ -3,24 +3,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var errorHandler = require('./middleware/errorHandler')
+
 var users  = require('./routes/users');
 
 var app = express();
 
-
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(logger('combined'))
 
 app.use('/api', users);
 
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.json({
-    message: err.message,
-    error: (app.get('env') === 'development') ? err : {}
-  });
-});
-
+app.use(errorHandler(app));
 
 module.exports = app;
