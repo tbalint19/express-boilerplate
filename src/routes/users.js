@@ -33,11 +33,12 @@ router.post('/:user_id/task', function (req, res) {
     title: req.body.title,
     UserId: req.params.user_id
   }).then(task => {
-    res.json(task);
+    res.json(taskDto(task));
   });
 });
 
 router.delete('/:user_id/task/:task_id', function (req, res) {
+  console.log(req.baseUrl + req.route.path);
   models.Task.destroy({
     where: {
       id: req.params.task_id
