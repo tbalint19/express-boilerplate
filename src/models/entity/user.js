@@ -2,11 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
     username: DataTypes.STRING
-  });
+  })
 
-  User.associate = function(models) {
+  User.associate = (models) => {
     models.User.hasMany(models.Task);
-  };
+  }
 
   return User;
 };

@@ -1,12 +1,12 @@
 var mapper = require('object-mapper');
 
-var userDto = user => mapper(user, {
+var userDto = user => mapper(user.get({ plain: true }), {
   username: "username"
 })
 
-var extendedUserDto = user => mapper(user, {
+var extendedUserDto = user => mapper(user.get({ plain: true }), {
   id: "id",
-  username: "username",
+  username: "username"
 })
 
 module.exports = {

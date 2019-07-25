@@ -1,8 +1,10 @@
 FROM node:10
 
-RUN npm install pm2 -g
+RUN npm install pm2@latest -g
 
 ADD . /appDir
 WORKDIR /appDir
-ENV NODE_ENV production
-CMD ["pm2-runtime", "./src/app.js"]
+
+CMD ["pm2-runtime", "start", "demo-app.sh"]
+
+EXPOSE 3000

@@ -6,11 +6,12 @@ router.get('/', (req, res) => {
   models.User.findAll({
     include: [ models.Task ]
   }).then(users => {
-    res.json({ users })
+    res.json( { users } )
   })
 })
 
 router.post('/', (req, res) => {
+  console.log(req.user);
   models.User.create({
     username: req.body.username
   }).then(user => {
@@ -38,7 +39,6 @@ router.post('/:user_id/task', function (req, res) {
 });
 
 router.delete('/:user_id/task/:task_id', function (req, res) {
-  console.log(req.baseUrl + req.route.path);
   models.Task.destroy({
     where: {
       id: req.params.task_id

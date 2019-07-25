@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING
   });
 
-  Task.associate = function (models) {
+  Task.associate = (models) => {
     models.Task.belongsTo(models.User, {
       onDelete: "CASCADE",
       foreignKey: {
