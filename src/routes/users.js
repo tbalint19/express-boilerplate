@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
   })
 })
 
-router.delete('/:user_id', function(req, res) {
+router.delete('/:user_id', (req, res) => {
   models.User.destroy({
     where: {
       id: req.params.user_id
@@ -29,7 +29,7 @@ router.delete('/:user_id', function(req, res) {
   });
 });
 
-router.post('/:user_id/task', function (req, res) {
+router.post('/:user_id/task', (req, res) => {
   models.Task.create({
     title: req.body.title,
     UserId: req.params.user_id
@@ -38,7 +38,7 @@ router.post('/:user_id/task', function (req, res) {
   });
 });
 
-router.delete('/:user_id/task/:task_id', function (req, res) {
+router.delete('/:user_id/task/:task_id', (req, res) => {
   models.Task.destroy({
     where: {
       id: req.params.task_id
