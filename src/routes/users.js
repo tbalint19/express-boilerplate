@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  console.log(req.user);
   models.User.create({
     username: req.body.username
   }).then(user => {
