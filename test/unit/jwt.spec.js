@@ -32,5 +32,4 @@ describe('JWT tests', function () {
       }
     )
   })
-
 })

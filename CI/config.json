@@ -1,0 +1,24 @@
+{
+  "coverage": {
+    "unit": {
+      "lines": 80,
+      "statements": 80,
+      "functions": 80,
+      "branches": 80
+    },
+    "integration": {
+      "lines": 80,
+      "statements": 80,
+      "functions": 80,
+      "branches": 80
+    }
+  },
+  "mutates": {
+    "killRate": 80
+  },
+  "sonar": {
+    "url": "http://sonarqube.vodafone.hu:9000",
+    "maxIssues": 0,
+    "maxDuplications": 0
+  }
+}
