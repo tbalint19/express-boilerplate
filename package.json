@@ -7,8 +7,8 @@
     "start": "cross-env NODE_ENV=development DEBUG=express-sequelize node ./bin/www",
     "prod": "cross-env NODE_ENV=production node ./bin/www",
     "test": "npm run test-unit && npm run test-integration",
-    "unit-tests": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "test-integration": "cross-env NODE_ENV=test ./node_modules/.bin/mocha test/integration/*.test.js"
+    "test-unit": "cross-env NODE_ENV=test ./node_modules/.bin/mocha test/unit/*.test.js",
+    "test-integration": "cross-env NODE_ENV=test ./node_modules/.bin/mocha test/*.spec.js"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
