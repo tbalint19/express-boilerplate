@@ -1,6 +1,8 @@
 {
-  "name": "express-example",
-  "version": "0.0.0",
+  "name": "express-boilerplate",
+  "version": "0.0.1",
+  "description": "An express js boilerplate",
+  "author": "TBalint19 <tothbalint719@gmail.com>",
   "private": true,
   "scripts": {
     "migrate": "node_modules/.bin/sequelize db:migrate",
