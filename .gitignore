@@ -4,3 +4,5 @@ npm-debug.log
 .nyc_output
 unit-coverage.txt
 integration-coverage.txt
+stryker.log
+.stryker-tmp

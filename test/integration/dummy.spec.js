@@ -6,7 +6,7 @@ var request = require('supertest');
 
 describe('User creation tests', function () {
   before(function () {
-      return require('../../src/models').sequelize.sync()
+    return require('../../src/models').sequelize.sync()
   })
 
   beforeEach(function () {
