@@ -1,0 +1,139 @@
+#!usr/bin/env groovy
+import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+
+node('linux && docker') {
+
+  branch = checkout(scm).GIT_BRANCH
+  commitHash = checkout(scm).GIT_COMMIT
+  projectName = sanitizeProjectName(branch)
+
+  sh "echo Branch: ${branch}, Commit hash: ${commitHash}, Project name: ${projectName}, Build id: ${env.BUILD_ID}"
+
+  try {
+      checkEnv()
+      checkout()
+      installDependencies()
+      checkCodeFormat()
+      runUnitTests()
+      runIntegrationTests()
+      checkCoverage()
+      validateTestCases()
+      sonar(projectName)
+      dockerize(projectName)
+      artifactoryUpload(projectName)
+      sendNotifications("SUCCESS")
+  } catch (e) {
+      echo 'Build failed with error: ' + e.toString()
+      sendNotifications("FAILURE")
+  } finally {
+
+  }
+}
+
+def sanitizeProjectName(String branch) {
+  def jobName = "${env.JOB_NAME}"
+  def localBranch = branch.replaceFirst("origin/", "")
+  def sonarBranchKey = localBranch
+  def project = sonarBranchKey == "master" ? jobName : "${jobName}:${sonarBranchKey}"
+  def sanitizedSonarProjectName = project.replaceAll("/", "-").toLowerCase()
+  return sanitizedSonarProjectName
+}
+
+def checkout() {
+    stage('Checkout source branch') {
+        checkout scm
+        notifyBitbucket()
+    }
+}
+
+def checkEnv() {
+  stage('Build environment check') {
+    sh 'node -v'
+    sh 'npm -v'
+  }
+}
+
+def installDependencies() {
+  stage('Install dependencies') {
+    sh 'rm -rf ./node_modules'
+    sh 'npm install'
+  }
+}
+
+def checkCodeFormat() {
+  stage('Code format check') {
+    sh 'npm run format-check'
+  }
+}
+
+def runUnitTests() {
+  stage('Run unit tests') {
+    sh 'npm run test-unit'
+  }
+}
+
+def runIntegrationTests() {
+  stage('Run integration tests') {
+    sh 'npm run test-integration'
+  }
+}
+
+def checkCoverage() {
+  stage('Code coverage check') {
+    sh 'npm run coverage-check'
+  }
+}
+
+def validateTestCases() {
+  stage('Validate test cases') {
+    sh 'rm -rf ./.stryker-tmp'
+    sh 'npm run mutate'
+    sh 'npm run mutate-kill-rate-check'
+  }
+}
+
+def sonar(String projectName) {
+  stage('Static code analysis') {
+    sh "npm --branch=${projectName} run sonar-check"
+  }
+}
+
+def dockerize(String projectName) {
+  stage('Dockerize') {
+    sh "docker build . -t ${projectName}"
+  }
+}
+
+def artifactoryUpload(String projectName) {
+  stage('Upload to artifactory') {
+    if (isMaster(branch)) {
+      def registry = "repository.vodafone.hu/docker-nma"
+      sh "docker tag ${projectName} ${registry}/${projectName}:${env.BUILD_ID}"
+      sh "docker push ${registry}/${projectName}"
+    } else {
+      Utils.markStageSkippedForConditional(env.STAGE_NAME)
+    }
+  }
+}
+
+def sendNotifications(String status) {
+    currentBuild.result = status
+    notifyBitbucket()
+}
+
+def notifyBitbucket(String state) {
+    notifyBitbucket commitSha1: $ { commitHash },
+            credentialsId: '1af21bbb-b246-42b8-adf0-2c9df8698240',
+            disableInprogressNotification: false,
+            considerUnstableAsSuccess: true,
+            ignoreUnverifiedSSLPeer: true,
+            includeBuildNumberInKey: false,
+            prependParentProjectKey: false,
+            projectKey: '',
+            stashServerBaseUrl: 'http://itdevcrepo2:7990'
+}
+
+def isMaster(String branch) {
+    def localBranch = branch.replaceFirst("origin/", "")
+    localBranch == "master"
+}
