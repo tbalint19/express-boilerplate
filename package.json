@@ -6,6 +6,8 @@
     "migrate": "node_modules/.bin/sequelize db:migrate",
     "start": "cross-env NODE_ENV=development DEBUG=express-sequelize node ./bin/www",
     "prod": "cross-env NODE_ENV=production node ./bin/www",
+    "format": "./node_modules/.bin/prettier --write '{src,test}/**/*'",
+    "format-check": "./node_modules/.bin/prettier --check '{src,test}/**/*'",
     "test": "npm run test-unit && npm run test-integration",
     "test-unit": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/unit/*.spec.js > ./unit-coverage.txt",
     "test-integration": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js > ./integration-coverage.txt",
@@ -37,6 +39,7 @@
     "expect.js": "^0.3.1",
     "mocha": "^6.0.0",
     "nyc": "^14.1.1",
+    "prettier": "1.18.2",
     "supertest": "^2.0.0"
   }
 }

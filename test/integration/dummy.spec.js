@@ -1,20 +1,20 @@
-'use strict';
+'use strict'
 
 var app = require('../../src/app')
-var expect = require('expect.js');
-var request = require('supertest');
+var expect = require('expect.js')
+var request = require('supertest')
 
-describe('User creation tests', function () {
-  before(function () {
+describe('User creation tests', function() {
+  before(function() {
     return require('../../src/models').sequelize.sync()
   })
 
-  beforeEach(function () {
-    this.models = require('../../src/models');
+  beforeEach(function() {
+    this.models = require('../../src/models')
 
     return Promise.all([
       this.models.Task.destroy({ truncate: true }),
-      this.models.User.destroy({ truncate: true })
+      this.models.User.destroy({ truncate: true }),
     ])
   })
 
@@ -30,8 +30,12 @@ describe('User creation tests', function () {
 
     // then
     await Promise.all([
-      this.models.User.findAll().then(users => expect(users).to.have.length(1)),
-      this.models.Task.findAll().then(tasks => expect(tasks).to.have.length(0)),
+      this.models.User.findAll().then((users) =>
+        expect(users).to.have.length(1)
+      ),
+      this.models.Task.findAll().then((tasks) =>
+        expect(tasks).to.have.length(0)
+      ),
     ])
   })
 
@@ -47,8 +51,12 @@ describe('User creation tests', function () {
 
     // then
     await Promise.all([
-      this.models.User.findAll().then(users => expect(users).to.have.length(1)),
-      this.models.Task.findAll().then(tasks => expect(tasks).to.have.length(0)),
+      this.models.User.findAll().then((users) =>
+        expect(users).to.have.length(1)
+      ),
+      this.models.Task.findAll().then((tasks) =>
+        expect(tasks).to.have.length(0)
+      ),
     ])
   })
 })
