@@ -8,7 +8,8 @@
     "prod": "cross-env NODE_ENV=production node ./bin/www",
     "test": "npm run test-unit && npm run test-integration",
     "test-unit": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/unit/*.spec.js > ./unit-coverage.txt",
-    "test-integration": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js > ./integration-coverage.txt"
+    "test-integration": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js > ./integration-coverage.txt",
+    "coverage-check": "node CI/scripts/coverage.js"
   },
   "nyc": {
     "reporter": [
