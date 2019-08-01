@@ -2,49 +2,52 @@ var models = require('../models')
 var express = require('express')
 var router = express.Router()
 
-router.get('/', (req, res) => {
-  models.User.findAll({
-    include: [models.Task],
-  }).then((users) => {
-    res.json({ users })
-  })
-})
+router.get('/', getAllUsers)
+router.post('/', createUser)
+router.delete('/:user_id', deleteUser)
+router.post('/:user_id/task', createTask)
+router.delete('/:user_id/task/:task_id', deleteTask)
 
-router.post('/', (req, res) => {
-  models.User.create({
+const getAllUsers = async function(req, res) {
+  let users = await models.User.findAll()
+  res.json({ users })
+}
+
+const createUser = async function(req, res) {
+  let newUser = {
     username: req.body.username,
-  }).then((user) => {
-    res.json(user)
-  })
-})
+  }
+  let savedUser = await models.User.create(newUser)
+  res.json(user)
+}
 
-router.delete('/:user_id', (req, res) => {
-  models.User.destroy({
+const deleteUser = async function(req, res) {
+  let criteria = {
     where: {
       id: req.params.user_id,
     },
-  }).then(() => {
-    res.status(201).end()
-  })
-})
+  }
+  await models.User.destroy(criteria)
+  res.status(201).end()
+}
 
-router.post('/:user_id/task', (req, res) => {
-  models.Task.create({
+const createTask = async function(req, res) {
+  let newTask = {
     title: req.body.title,
     UserId: req.params.user_id,
-  }).then((task) => {
-    res.json(taskDto(task))
-  })
-})
+  }
+  let savedTask = await models.Task.create(newTask)
+  res.json(taskDto(savedTask))
+}
 
-router.delete('/:user_id/task/:task_id', (req, res) => {
-  models.Task.destroy({
+const deleteTask = async function(req, res) {
+  let criteria = {
     where: {
       id: req.params.task_id,
     },
-  }).then(() => {
-    res.status(201).end()
-  })
-})
+  }
+  await models.Task.destroy(criteria)
+  res.status(201).end()
+}
 
 module.exports = router

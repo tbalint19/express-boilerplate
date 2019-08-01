@@ -19,7 +19,7 @@ app.use(logger('combined'))
 app.use(authMiddleware)
 // use middleware
 
-app.use('/api/user', users)
+app.use('/api/users', users)
 // use routes
 
 app.use(errorHandler(app))
