@@ -12,7 +12,7 @@
     "format-check": "./node_modules/.bin/prettier --check '{src,test}/**/*'",
     "test": "npm run test-unit && npm run test-integration",
     "test-unit": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/unit/*.spec.js > ./unit-coverage.txt",
-    "test-integration": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js > ./integration-coverage.txt",
+    "test-integration": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js",
     "coverage-check": "node CI/scripts/coverage.js",
     "mutate": "cross-env NODE_ENV=test ./node_modules/@stryker-mutator/core/bin/stryker run"
   },
