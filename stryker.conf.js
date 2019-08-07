@@ -13,13 +13,13 @@ module.exports = function(config) {
     ],
     mutator: "javascript",
     packageManager: "npm",
-    reporters: ["clear-text", "progress"],
     testRunner: "mocha",
     transpilers: [],
     testFramework: "mocha",
     mochaOptions: {
       files: ['test/integration/*.js']
     },
+    reporters: ["progress", "clear-text", "html", "dots"],
     coverageAnalysis: "perTest"
   });
 };

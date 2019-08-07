@@ -14,7 +14,9 @@
     "test-unit": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/unit/*.spec.js > ./unit-coverage.txt",
     "test-integration": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js",
     "coverage-check": "node CI/scripts/coverage.js",
-    "mutate": "cross-env NODE_ENV=test ./node_modules/@stryker-mutator/core/bin/stryker run"
+    "mutate": "cross-env NODE_ENV=test ./node_modules/@stryker-mutator/core/bin/stryker run",
+    "mutate-kill-rate-check": "node CI/scripts/mutateRate.js",
+    "sonar-check": "node CI/scripts/sonar.js"
   },
   "nyc": {
     "reporter": [
@@ -34,9 +36,11 @@
   },
   "devDependencies": {
     "@stryker-mutator/core": "^2.0.2",
+    "@stryker-mutator/html-reporter": "^2.0.0",
     "@stryker-mutator/javascript-mutator": "^2.0.2",
     "@stryker-mutator/mocha-framework": "^2.0.2",
     "@stryker-mutator/mocha-runner": "^2.0.2",
+    "sonarqube-scanner": "^2.4.1",
     "cross-env": "^5.0.1",
     "expect.js": "^0.3.1",
     "mocha": "^6.0.0",
