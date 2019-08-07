@@ -107,7 +107,7 @@ def dockerize(String projectName) {
 def artifactoryUpload(String projectName) {
   stage('Upload to artifactory') {
     if (isMaster(branch)) {
-      def registry = "repository.vodafone.hu/docker-nma"
+      def registry = "repository.vodafone.hu/docker-cas"
       sh "docker tag ${projectName} ${registry}/${projectName}:${env.BUILD_ID}"
       sh "docker push ${registry}/${projectName}"
     } else {
