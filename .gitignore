@@ -6,3 +6,4 @@ unit-coverage.txt
 integration-coverage.txt
 stryker.log
 .stryker-tmp
+reports
