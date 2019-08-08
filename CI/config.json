@@ -14,7 +14,7 @@
     }
   },
   "mutates": {
-    "killRate": 5
+    "killRate": 0
   },
   "sonar": {
     "url": "http://sonarqube.vodafone.hu:9000",
