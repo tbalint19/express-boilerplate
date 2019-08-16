@@ -10,8 +10,8 @@ router.get('/', async (req, res) => {
 router.get('/:user_id', async (req, res) => {
   let criteria = {
     where: {
-      id: user_id
-    }
+      id: user_id,
+    },
   }
   let user = await models.User.findAll(criteria)
   res.json(user)
@@ -28,11 +28,11 @@ router.post('/', async (req, res) => {
 router.put('/:user_id', async (req, res) => {
   let criteria = {
     where: {
-      id: req.params.user_id
-    }
+      id: req.params.user_id,
+    },
   }
   let data = {
-    username: req.body.username
+    username: req.body.username,
   }
   let savedUser = await models.User.update(data, criteria)
   res.json(savedUser)
