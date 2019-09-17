@@ -29,14 +29,11 @@ describe('User creation tests', function() {
       .expect(200)
 
     // then
-    await Promise.all([
-      this.models.User.findAll().then((users) =>
-        expect(users).to.have.length(1)
-      ),
-      this.models.Task.findAll().then((tasks) =>
-        expect(tasks).to.have.length(0)
-      ),
-    ])
+    const users = await this.models.User.findAll()
+    expect(users).to.have.length(1)
+
+    const tasks = await this.models.Task.findAll()
+    expect(tasks).to.have.length(0)
   })
 
   it('should query the saved user', async function() {
@@ -66,14 +63,11 @@ describe('User creation tests', function() {
       .expect(200)
 
     // then
-    await Promise.all([
-      this.models.User.findAll().then((users) =>
-        expect(users).to.have.length(1)
-      ),
-      this.models.Task.findAll().then((tasks) =>
-        expect(tasks).to.have.length(0)
-      ),
-    ])
+    const users = await this.models.User.findAll()
+    expect(users).to.have.length(1)
+
+    const tasks = await this.models.Task.findAll()
+    expect(tasks).to.have.length(0)
   })
 
   it('should recieve updated user', async function() {
@@ -92,13 +86,10 @@ describe('User creation tests', function() {
 
     // then
     expect(userUpdateResponse.body[0]).to.be(1)
-    await Promise.all([
-      this.models.User.findAll().then((users) =>
-        expect(users).to.have.length(1)
-      ),
-      this.models.Task.findAll().then((tasks) =>
-        expect(tasks).to.have.length(0)
-      ),
-    ])
+    const users = await this.models.User.findAll()
+    expect(users).to.have.length(1)
+
+    const tasks = await this.models.Task.findAll()
+    expect(tasks).to.have.length(0)
   })
 })
