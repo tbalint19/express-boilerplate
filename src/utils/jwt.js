@@ -20,7 +20,7 @@ const verify = (token)  => new Promise((resolve, reject) => jwt.verify(
     if (err)
      return reject(err)
     else
-     return resolve(token)
+     return resolve(payload)
   }
 ))
 

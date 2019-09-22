@@ -13,13 +13,12 @@ router.post('/', async (req, res) => {
     const userData = jwt.parse(tokenResponse.data.id_token)
     const sessionToken = await jwt.create({
       id: userData.sub,
-      username: userData.email,
+      email: userData.email,
       role: null,
-      permissions: [],
+      permissions: ["READ_USERS"],
     })
     return res.json({ sessionToken })
   } catch (e) {
-    console.log(e);
     return res.sendStatus(401)
   }
 })

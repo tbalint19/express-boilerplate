@@ -1,8 +1,11 @@
 var models = require('../models')
 var express = require('express')
 var router = express.Router()
+const authorize = require('../utils/authorize')
 
 router.get('/', async (req, res) => {
+  console.log(req.user);
+  authorize(req.user.can("READ_USERS"))
   let users = await models.User.findAll()
   res.json({ users })
 })
