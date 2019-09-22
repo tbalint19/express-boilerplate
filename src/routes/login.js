@@ -2,8 +2,7 @@ var models = require('../models')
 var express = require('express')
 var router = express.Router()
 var googleApi = require('../api/google.js')
-var parse = require('../utils/jwt')
-var jwt = require('jsonwebtoken')
+var jwt = require('../utils/jwt')
 
 router.post('/', async (req, res) => {
   const authorizationCode = req.body.authorizationCode
@@ -11,17 +10,13 @@ router.post('/', async (req, res) => {
     return res.sendStatus(401)
   try {
     const tokenResponse = await googleApi.getIdToken(authorizationCode)
-    const userData = parse(tokenResponse.data.id_token)
-    const sessionToken = jwt.sign(
-    {
+    const userData = jwt.parse(tokenResponse.data.id_token)
+    const sessionToken = await jwt.create({
       id: userData.sub,
       username: userData.email,
       role: null,
       permissions: [],
-    },
-    'secret-key',
-    { expiresIn: '8h' }
-  )
+    })
     return res.json({ sessionToken })
   } catch (e) {
     console.log(e);
