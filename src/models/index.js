@@ -19,11 +19,11 @@ if (config.use_env_variable) {
   )
 }
 
-fs.readdirSync(__dirname + '/entity', { withFileTypes: true })
+fs.readdirSync(__dirname, { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => dirent.name)
   .forEach((dirname) => {
-    fs.readdirSync(__dirname + '/entity/' + dirname)
+    fs.readdirSync(__dirname + '/' + dirname)
       .filter((file) => {
         return (
           file.indexOf('.') !== 0 &&
@@ -33,7 +33,7 @@ fs.readdirSync(__dirname + '/entity', { withFileTypes: true })
       })
       .forEach((file) => {
         var model = sequelize['import'](
-          path.join(__dirname + '/entity/' + dirname, file)
+          path.join(__dirname + '/' + dirname, file)
         )
         db[model.name] = model
       })

@@ -1,6 +1,6 @@
 const axios = require('axios')
 const querystring = require('querystring')
-const GOOGLE_CONFIG = require('../../google.json')
+const GOOGLE_CONFIG = require('../../config.js')['google']
 
 class GoogleAPI {
   constructor() {
