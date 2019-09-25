@@ -1,5 +1,5 @@
 var express = require('express')
-require('express-async-errors');
+require('express-async-errors')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')

@@ -4,10 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     type: {
       type: DataTypes.ENUM,
-      values: [
-        'ROLE',
-        'PERMISSION'
-      ]
+      values: ['ROLE', 'PERMISSION'],
     },
     scope: DataTypes.STRING,
   })

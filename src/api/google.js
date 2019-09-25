@@ -12,11 +12,11 @@ class GoogleAPI {
   getIdToken(authorizationCode) {
     const formData = {
       code: authorizationCode,
-      redirect_uri: GOOGLE_CONFIG.redirect_uri,
       client_id: GOOGLE_CONFIG.client_ID,
       client_secret: GOOGLE_CONFIG.client_secret,
-      scope: "openid email profile",
-      grant_type: "authorization_code",
+      redirect_uri: GOOGLE_CONFIG.redirect_uri,
+      scope: 'openid email profile',
+      grant_type: 'authorization_code',
     }
     return this.http.post('/oauth2/v4/token', querystring.stringify(formData))
   }

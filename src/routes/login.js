@@ -6,8 +6,7 @@ var jwt = require('../utils/jwt')
 
 router.post('/', async (req, res) => {
   const authorizationCode = req.body.authorizationCode
-  if (!authorizationCode)
-    return res.sendStatus(401)
+  if (!authorizationCode) return res.sendStatus(401)
 
   let userData
   try {
@@ -19,20 +18,12 @@ router.post('/', async (req, res) => {
 
   const googleId = userData.sub
   const email = userData.email
-  let existingUser = await models.User.findOne(
-    { where: { googleId } }
-  )
+  let existingUser = await models.User.findOne({ where: { googleId } })
 
   if (!existingUser)
-    existingUser = await models.User.create(
-      { googleId, email }
-    )
-
+    existingUser = await models.User.create({ googleId, email })
   else if (existingUser.email != email)
-    await models.User.update(
-      { email },
-      { where: { googleId } }
-    )
+    await models.User.update({ email }, { where: { googleId } })
 
   const sessionToken = await jwt.create({
     id: existingUser.googleId,
