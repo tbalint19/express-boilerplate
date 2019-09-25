@@ -19,7 +19,9 @@ router.post('/', async (req, res) => {
 
   const googleId = userData.sub
   const email = userData.email
-  let existingUser = await models.User.findOne({ where: { googleId }})
+  let existingUser = await models.User.findOne(
+    { where: { googleId } }
+  )
 
   if (!existingUser)
     existingUser = await models.User.create(
