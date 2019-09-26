@@ -20,16 +20,27 @@ router.post('/', async (req, res) => {
   const email = userData.email
   let existingUser = await models.User.findOne({ where: { googleId } })
 
-  if (!existingUser)
-    existingUser = await models.User.create({ googleId, email })
+  if (!existingUser) {
+    await models.sequelize.transaction(async transaction => {
+      existingUser = await models.User.create(
+        { googleId, email }), { transaction }
+      await models.Grant.update(
+        { UserId: existingUser.id }, { where: { email } }, { transaction })
+      await models.Grant.update(
+        { email: null }, { where: { UserId: existingUser.id } }, { transaction })
+    })
+  }
   else if (existingUser.email != email)
     await models.User.update({ email }, { where: { googleId } })
 
+  const grants = await existingUser.getGrants()
+
   const sessionToken = await jwt.create({
-    id: existingUser.googleId,
+    id: existingUser.id,
+    googleId: existingUser.googleId,
     email: existingUser.email,
-    role: null,
-    permissions: [],
+    role: grants.find(grant => grant.type == 'ROLE' || null),
+    permissions: grants.filter(grant => grant.type == 'PERMISSION'),
   })
 
   return res.json({ sessionToken })

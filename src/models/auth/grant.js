@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       values: ['ROLE', 'PERMISSION'],
     },
     scope: DataTypes.STRING,
+    email: DataTypes.STRING,
   })
 
   Grant.associate = (models) => {
