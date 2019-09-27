@@ -9,7 +9,8 @@ var errorHandler = require('./middleware/errorHandler')
 var authMiddleware = require('./middleware/authMiddleware')
 // require middleware
 
-var login = require('./routes/login')
+var user = require('./routes/user')
+var role = require('./routes/role')
 // require routes
 
 var app = express()
@@ -22,7 +23,8 @@ app.use(cors())
 app.use(authMiddleware)
 // use middleware
 
-app.use('/api/login', login)
+app.use('/api/user', user)
+app.use('/api/role', role)
 // use routes
 
 app.use(errorHandler(app))
