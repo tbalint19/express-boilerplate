@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   if (!existingUser) {
     await models.sequelize.transaction(async transaction => {
       existingUser = await models.User.create(
-        { googleId, email }), { transaction }
+        { googleId, email }, { transaction })
       await models.Grant.update(
         { UserId: existingUser.id }, { where: { email } }, { transaction })
       await models.Grant.update(
