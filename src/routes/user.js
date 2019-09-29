@@ -27,7 +27,6 @@ router.post('/login', async (req, res) => {
         { googleId, email }, { transaction })
       const [ affectedRows ] = await models.Role.update(
         { UserId: existingUser.id }, { where: { preAssignedTo: email } }, { transaction })
-      console.log(!affectedRows)
       if (!affectedRows)
         await models.Role.create(
           { UserId: existingUser.id, name: 'USER', scope: null  }, { transaction })
