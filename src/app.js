@@ -4,6 +4,8 @@ var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var cors = require('cors')
+var { createMiddleware } = require('@promster/express');
+var prometheusOptions = require(__dirname + '/../config.js')['prometheus']
 
 var errorHandler = require('./middleware/errorHandler')
 var authMiddleware = require('./middleware/authMiddleware')
@@ -11,10 +13,12 @@ var authMiddleware = require('./middleware/authMiddleware')
 
 var user = require('./routes/user')
 var role = require('./routes/role')
+var prometheus = require('./routes/actuator/prometheus')
 // require routes
 
 var app = express()
 
+app.use(createMiddleware({ app, options: prometheusOptions }))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(logger('combined'))
@@ -25,6 +29,7 @@ app.use(authMiddleware)
 
 app.use('/api/user', user)
 app.use('/api/role', role)
+app.use('/actuator', prometheus)
 // use routes
 
 app.use(errorHandler(app))
