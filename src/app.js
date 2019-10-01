@@ -30,7 +30,6 @@ app.use(logger('combined', {
     path: path.join(__dirname, '../log')
   })
 }))
-console.log(__dirname);
 app.use(logger('dev'))
 app.use(cors())
 
