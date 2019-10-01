@@ -8,3 +8,4 @@ stryker.log
 .stryker-tmp
 reports
 access.log
+log

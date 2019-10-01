@@ -5,8 +5,10 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 var { createMiddleware } = require('@promster/express');
-var prometheusOptions = require(__dirname + '/../config.js')['prometheus']
+var config = require(__dirname + '/../config.js')
 var fs = require('fs');
+var path = require('path');
+var rfs = require('rotating-file-stream')
 
 var errorHandler = require('./middleware/errorHandler')
 var authMiddleware = require('./middleware/authMiddleware')
@@ -19,12 +21,16 @@ var prometheus = require('./routes/actuator/prometheus')
 
 var app = express()
 
-app.use(createMiddleware({ app, options: prometheusOptions }))
+app.use(createMiddleware({ app, options: config['prometheus'] }))
 app.use(bodyParser.json())
 app.use(cookieParser())
-app.use(logger('common', {
-  stream: fs.createWriteStream('./access.log', {flags: 'a'})
+app.use(logger('combined', {
+    stream: rfs('access.log', {
+    interval: '1m',
+    path: path.join(__dirname, '../log')
+  })
 }))
+console.log(__dirname);
 app.use(logger('dev'))
 app.use(cors())
 
