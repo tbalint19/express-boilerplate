@@ -7,3 +7,4 @@ integration-coverage.txt
 stryker.log
 .stryker-tmp
 reports
+access.log
