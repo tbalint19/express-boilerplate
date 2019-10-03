@@ -1,11 +1,14 @@
-const authorize = (isAuthorized) => {
+const authorize = (
+  isAuthorized,
+  message = 'Unauthorized by auth middleware'
+) => {
   if (!isAuthorized)
     throw {
       status: 403,
-      message: 'Unauthorized by auth middleware',
+      message,
     }
 }
 
 module.exports = {
-  authorize
+  authorize,
 }

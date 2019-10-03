@@ -3,12 +3,12 @@ require('express-async-errors')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var cors = require('cors')
-var { createMiddleware } = require('@promster/express');
+var { createMiddleware } = require('@promster/express')
 var config = require(__dirname + '/../config.js')
 
 var errorHandler = require('./middleware/errorHandler')
 var authMiddleware = require('./middleware/authMiddleware')
-var jsonLoggerMiddleware = require('./middleware/jsonLoggerMiddleware')
+var logger = require('./middleware/logger')
 // require middleware
 
 var user = require('./routes/user')
@@ -21,8 +21,8 @@ var app = express()
 app.use(createMiddleware({ app, options: config['prometheus'] }))
 app.use(bodyParser.json())
 app.use(cookieParser())
-app.use(jsonLoggerMiddleware({ persist: true }))
-app.use(jsonLoggerMiddleware({ persist: false }))
+app.use(logger({ persist: true }))
+app.use(logger({ persist: false }))
 app.use(cors())
 
 app.use(authMiddleware)

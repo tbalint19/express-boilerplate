@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     isBlacklisted: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false
+      defaultValue: false,
     },
   })
 

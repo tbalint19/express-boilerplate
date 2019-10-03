@@ -22,24 +22,31 @@ router.post('/login', async (req, res) => {
   let existingUser = await models.User.findOne({ where: { googleId } })
 
   if (!existingUser) {
-    await models.sequelize.transaction(async transaction => {
+    await models.sequelize.transaction(async (transaction) => {
       existingUser = await models.User.create(
-        { googleId, email }, { transaction })
-      const [ affectedRows ] = await models.Role.update(
-        { UserId: existingUser.id }, { where: { preAssignedTo: email } }, { transaction })
+        { googleId, email },
+        { transaction }
+      )
+      const [affectedRows] = await models.Role.update(
+        { UserId: existingUser.id },
+        { where: { preAssignedTo: email } },
+        { transaction }
+      )
       if (!affectedRows)
         await models.Role.create(
-          { UserId: existingUser.id, name: 'USER', scope: null  }, { transaction })
+          { UserId: existingUser.id, name: 'USER', scope: null },
+          { transaction }
+        )
     })
-  }
-  else if (existingUser.email != email)
+  } else if (existingUser.email != email)
     await models.User.update({ email }, { where: { googleId } })
-  else if (existingUser.isBlacklisted)
-    return res.sendStatus(401)
+  else if (existingUser.isBlacklisted) return res.sendStatus(401)
 
   existingUser = await existingUser.reload()
   const role = await existingUser.getRole({ attributes: ['name', 'scope'] })
-  const permissions = await existingUser.getPermissions({ attributes: ['name', 'scope'] })
+  const permissions = await existingUser.getPermissions({
+    attributes: ['name', 'scope'],
+  })
 
   const sessionToken = await jwt.create({
     id: existingUser.id,
@@ -59,7 +66,7 @@ router.post('/blacklist', async (req, res) => {
 
   authorize(
     (userRole == 'ADMIN' && req.user.is('ROOT')) ||
-    (userRole == 'USER' && (req.user.is('ROOT') || req.user.is('ADMIN')))
+      (userRole == 'USER' && (req.user.is('ROOT') || req.user.is('ADMIN')))
   )
 
   await models.User.update({ isBlacklisted: to }, { where: { id: user.id } })
