@@ -10,3 +10,4 @@ reports
 access.log
 log
 .DS_Store
+coverage

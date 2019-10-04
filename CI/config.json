@@ -1,16 +1,16 @@
 {
   "coverage": {
     "unit": {
-      "lines": 5,
-      "statements": 5,
-      "functions": 5,
-      "branches": 5
+      "lines": 0,
+      "statements": 0,
+      "functions": 0,
+      "branches": 0
     },
     "integration": {
-      "lines": 5,
-      "statements": 5,
-      "functions": 5,
-      "branches": 5
+      "lines": 0,
+      "statements": 0,
+      "functions": 0,
+      "branches": 0
     }
   },
   "mutates": {

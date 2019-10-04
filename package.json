@@ -12,16 +12,19 @@
     "format": "./node_modules/.bin/prettier --write '{src,test}/**/*'",
     "format-check": "./node_modules/.bin/prettier --check '{src,test}/**/*'",
     "test": "npm run test-unit && npm run test-integration",
-    "test-unit": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/unit/*.spec.js > ./unit-coverage.txt",
-    "test-integration": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js",
+    "unit-tests": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/unit/*.spec.js > ./unit-coverage.txt",
+    "integration-tests": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js > ./integration-coverage.txt",
     "coverage-check": "node CI/scripts/coverage.js",
+    "coverage-report": "http-server coverage",
     "mutate": "cross-env NODE_ENV=test ./node_modules/@stryker-mutator/core/bin/stryker run",
     "mutate-kill-rate-check": "node CI/scripts/mutateRate.js",
+    "mutation-report": "http-server reports/mutation/html",
     "sonar-check": "node CI/scripts/sonar.js"
   },
   "nyc": {
     "reporter": [
-      "text-summary"
+      "text-summary",
+      "html"
     ]
   },
   "dependencies": {

@@ -68,13 +68,13 @@ def checkCodeFormat() {
 
 def runUnitTests() {
   stage('Run unit tests') {
-    sh 'npm run test-unit'
+    sh 'npm run unit-tests'
   }
 }
 
 def runIntegrationTests() {
   stage('Run integration tests') {
-    sh 'npm run test-integration'
+    sh 'npm run integration-tests'
   }
 }
 

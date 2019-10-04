@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = function(config) {
   config.set({
-    mutate: [ "src/**/*.js" ],
+    mutate: [ "src/utils/*.js" ],
     files: [
       'bin/*',
       'migrations/*',
@@ -17,7 +17,7 @@ module.exports = function(config) {
     transpilers: [],
     testFramework: "mocha",
     mochaOptions: {
-      files: ['test/integration/*.js']
+      files: ['test/unit/*.js']
     },
     reporters: ["progress", "clear-text", "html", "dots"],
     coverageAnalysis: "perTest"
