@@ -1,5 +1,6 @@
 'use strict'
 
+var app = require('../../src/app')
 var expect = require('expect.js')
 var { parse } = require('../../src/utils/jwt.js')
 

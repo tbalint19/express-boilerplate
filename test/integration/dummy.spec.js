@@ -34,4 +34,19 @@ describe('User creation tests', function() {
     expect(users).to.have.length(0)
   })
 
+  it('should not be able to create admin', async function() {
+    // given
+    let newUser = { username: 'bela' }
+
+    // when
+    await request(app)
+      .post('/api/role/admin')
+      .send(newUser)
+      .expect(403)
+
+    // then
+    const users = await this.models.User.findAll()
+    expect(users).to.have.length(0)
+  })
+
 })

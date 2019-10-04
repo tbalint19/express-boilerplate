@@ -45,6 +45,7 @@ class AnonymusUser {
 var authMiddleware = async (req, res, next) => {
   try {
     var sessionToken = req.get('Authorization')
+    console.log("called");
     var payload = await jwt.verify(sessionToken)
     req.user = new SessionUser(payload)
   } catch (e) {
