@@ -48,5 +48,4 @@ describe('User creation tests', function() {
     const users = await this.models.User.findAll()
     expect(users).to.have.length(0)
   })
-
 })

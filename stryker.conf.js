@@ -17,7 +17,10 @@ module.exports = function(config) {
     transpilers: [],
     testFramework: "mocha",
     mochaOptions: {
-      files: [ 'test/unit/*.js', 'test/unit/*.js' ]
+      files: [
+        'test/unit/*.js',
+        'test/integration/*.js',
+      ]
     },
     reporters: ["progress", "clear-text", "html", "dots"],
     coverageAnalysis: "perTest"
