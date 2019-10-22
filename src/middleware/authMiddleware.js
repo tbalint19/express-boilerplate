@@ -13,11 +13,11 @@ class SessionUser {
   }
 
   is(role) {
-    return this.role == role
+    return this.role.name == role
   }
 
   can(permission) {
-    return this.permissions.includes(permission)
+    return this.permissions.some(entry => entry.name == permission)
   }
 }
 

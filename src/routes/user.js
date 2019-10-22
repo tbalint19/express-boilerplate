@@ -60,16 +60,16 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/blacklist', async (req, res) => {
-  const { email, to } = req.body.userId
+  const { email, to } = req.body
   const user = await models.User.findOne({ where: { email } })
   const userRole = await user.getRole()
 
   authorize(
-    (userRole == 'ADMIN' && req.user.is('ROOT')) ||
-      (userRole == 'USER' && (req.user.is('ROOT') || req.user.is('ADMIN')))
+    (userRole.name == 'ADMIN' && req.user.is('ROOT')) ||
+      (userRole.name == 'USER' && (req.user.is('ROOT') || req.user.is('ADMIN')))
   )
 
-  await models.User.update({ isBlacklisted: to }, { where: { id: user.id } })
+  await models.User.update({ isBlacklisted: to }, { where: { email } })
 
   res.sendStatus(200)
 })
