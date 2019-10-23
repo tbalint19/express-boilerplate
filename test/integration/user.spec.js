@@ -7,16 +7,16 @@ var { parse } = require('../../src/utils/jwt.js')
 
 var { googleResponse } = require('../util/googleResponse.js')
 var { GoogleMock } = require('../util/googleMock.js')
-var { newDb } = require('../util/newDb.js')
+var { newDb, clearDb } = require('../util/db.js')
 
 describe('User endpoint tests', function() {
 
-  before(function() {
-    return require('../../src/models').sequelize.sync()
+  before(async function() {
+    this.models = await newDb()
   })
 
   beforeEach(async function() {
-    this.models = await newDb()
+    await clearDb()
   })
 
   it('should login as user without preassigned role', async function() {

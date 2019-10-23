@@ -4,7 +4,7 @@ var app = require('../../src/app.js')
 var expect = require('expect.js')
 var request = require('supertest')
 
-var { newDb } = require('../util/newDb.js')
+var { newDb, clearDb } = require('../util/db.js')
 var {
   programaticallyPreassingRoot,
   login,
@@ -12,12 +12,12 @@ var {
 
 describe('User endpoint tests', function() {
 
-  before(function() {
-    return require('../../src/models').sequelize.sync()
+  before(async function() {
+    this.models = await newDb()
   })
 
   beforeEach(async function() {
-    this.models = await newDb()
+    await clearDb()
   })
 
   it('should preassign admin role as root', async function() {
