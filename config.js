@@ -1,3 +1,5 @@
+var pg = require('pg')
+
 module.exports = {
 
   'database': {
@@ -6,6 +8,7 @@ module.exports = {
       password: "Fuzzwktrka88bcykjypt",
       database: "initial",
       dialect: 'postgres',
+      dialectModule: pg,
       host: '0.0.0.0',
       port: 5432,
     },
@@ -19,6 +22,7 @@ module.exports = {
       password: "postgres",
       database: "postgres",
       dialect: 'postgres',
+      dialectModule: pg,
       host: '0.0.0.0',
       port: 5433,
     }
