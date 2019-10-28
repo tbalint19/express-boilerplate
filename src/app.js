@@ -9,10 +9,12 @@ var config = require(__dirname + '/../config.js')
 var errorHandler = require('./middleware/errorHandler')
 var authMiddleware = require('./middleware/authMiddleware')
 var logger = require('./middleware/logger')
+var fileUpload = require('express-fileupload')
 // require middleware
 
 var user = require('./routes/user')
 var role = require('./routes/role')
+var file = require('./routes/file')
 var prometheus = require('./routes/actuator/prometheus')
 // require routes
 
@@ -27,11 +29,16 @@ if (process.env.NODE_ENV !== 'test') {
 }
 app.use(cors())
 
+app.use(fileUpload({
+    createParentPath : true,
+}));
+
 app.use(authMiddleware)
 // use middleware
 
 app.use('/api/user', user)
 app.use('/api/role', role)
+app.use('/api/file', file)
 app.use('/actuator', prometheus)
 // use routes
 
