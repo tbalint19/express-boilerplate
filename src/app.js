@@ -32,6 +32,6 @@ app.use('/api/role', role)
 app.use('/actuator', prometheus)
 // use routes
 
-app.use(errorHandler(app))
+app.use(errorHandler)
 
 module.exports = app
