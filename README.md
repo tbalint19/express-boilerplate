@@ -1,13 +1,13 @@
 # ExpressJS boilerplate app
 
-- sequlize
-- prometheus
-- logger
-- google openid auth
-- auth models
-- unit & integration tests
-- mutation testing
-- axios
-- prettier
-- CI pipeline (jenkins)
-- dockerization
+- Sequlize ORM
+- Prometheus middleware (metrics)
+- Morgan JSON logger
+- Google OpenID authentication
+- Auth models (user, role, permission)
+- Unit & Integration tests (with mocha)
+- Mutation testing (with stryker)
+- Axios http client
+- Prettier format
+- CI pipeline (Jenkinsfile)
+- Containerization (Dockerfile)
