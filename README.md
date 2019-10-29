@@ -3,7 +3,7 @@
 - sequlize
 - prometheus
 - logger
-- google login
+- google openid auth
 - auth models
 - unit & integration tests
 - mutation testing
