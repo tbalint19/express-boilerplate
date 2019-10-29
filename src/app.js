@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 var { createMiddleware } = require('@promster/express')
-var config = require(__dirname + '/../config.js')
+var config = require(__dirname + '/../config')
 
 var errorHandler = require('./middleware/errorHandler')
 var authMiddleware = require('./middleware/authMiddleware')

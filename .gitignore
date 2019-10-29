@@ -11,3 +11,4 @@ access.log
 log
 .DS_Store
 coverage
+config/development.js

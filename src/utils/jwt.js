@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const jwtConfig = require('../../config.js')['jwt']
+const jwtConfig = require('../../config')['jwt']
 
 const create = (payload) =>
   new Promise((resolve, reject) =>

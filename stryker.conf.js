@@ -5,11 +5,11 @@ module.exports = function(config) {
     mutate: [ "src/utils/*.js" ],
     files: [
       'bin/*',
-      'migrations/*',
+      // 'migrations/*',
       '.sequelizerc',
       'src/**/*.js',
       'test/**/*.js',
-      'config.js'
+      'config/*.js'
     ],
     mutator: "javascript",
     packageManager: "npm",
