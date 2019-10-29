@@ -36,6 +36,7 @@
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
+    "cross-env": "^5.0.1",
     "debug": "^3.1.0",
     "express": "^4.16.2",
     "express-async-errors": "^3.1.1",
@@ -46,8 +47,7 @@
     "querystring": "^0.2.0",
     "rotating-file-stream": "^1.4.3",
     "sequelize": "^5.19.0",
-    "sequelize-cli": "^5.5.0",
-    "sqlite": "^3.0.3"
+    "sequelize-cli": "^5.5.0"
   },
   "devDependencies": {
     "@stryker-mutator/core": "^2.0.2",
@@ -57,11 +57,11 @@
     "@stryker-mutator/mocha-runner": "^2.0.2",
     "axios-mock-adapter": "^1.17.0",
     "sonarqube-scanner": "^2.4.1",
-    "cross-env": "^5.0.1",
     "expect.js": "^0.3.1",
     "mocha": "^6.0.0",
     "nyc": "^14.1.1",
     "prettier": "1.18.2",
-    "supertest": "^2.0.0"
+    "supertest": "^2.0.0",
+    "sqlite3": "^4.1.0"
   }
 }

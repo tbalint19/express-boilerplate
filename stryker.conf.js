@@ -17,7 +17,7 @@ module.exports = function(config) {
     transpilers: [],
     testFramework: "mocha",
     mochaOptions: {
-      files: [
+      spec: [
         'test/unit/*.js',
         'test/integration/*.js',
       ]
