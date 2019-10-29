@@ -43,4 +43,5 @@ var loggerMiddlerware = function logger({ persist }) {
 
 var skippedLogger = () => (req, res, next) => next()
 
-module.exports = process.env.NODE_ENV !== 'test' ? loggerMiddlerware : skippedLogger
+module.exports =
+  process.env.NODE_ENV !== 'test' ? loggerMiddlerware : skippedLogger

@@ -1,4 +1,4 @@
-var MockAdapter = require('axios-mock-adapter');
+var MockAdapter = require('axios-mock-adapter')
 const googleApi = require('../../src/api/google.js')
 
 const GoogleMock = () => {
@@ -7,5 +7,5 @@ const GoogleMock = () => {
 }
 
 module.exports = {
-  GoogleMock
+  GoogleMock,
 }

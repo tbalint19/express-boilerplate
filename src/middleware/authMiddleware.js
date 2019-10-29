@@ -17,7 +17,7 @@ class SessionUser {
   }
 
   can(permission) {
-    return this.permissions.some(entry => entry.name == permission)
+    return this.permissions.some((entry) => entry.name == permission)
   }
 }
 
