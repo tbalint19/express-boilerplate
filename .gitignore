@@ -11,4 +11,7 @@ access.log
 log
 .DS_Store
 coverage
-config/development.js
+config/*
+!config/index.js
+!config/production.js
+!config/test.js

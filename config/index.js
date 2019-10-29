@@ -20,5 +20,18 @@ fs.readdirSync(__dirname)
   })
 
 var env = process.env.NODE_ENV || 'development'
+var appConfig = config[env]
 
-module.exports = config[env]
+if (!appConfig) throw `
+No config exists for NODE_ENV: '${env}' !
+Are you sure config/${env}.js file exists?
+
+Fix:
+ - Copy config/production.js as config/${env}.js
+ - update the values (process.env.NODE_ENV -> custom local values)
+ - relaunch the app
+
+(${env}.js will be gitignored)
+`
+
+module.exports = appConfig
