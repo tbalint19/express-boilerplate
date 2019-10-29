@@ -21,12 +21,9 @@ var app = express()
 app.use(createMiddleware({ app, options: config['prometheus'] }))
 app.use(bodyParser.json())
 app.use(cookieParser())
-if (process.env.NODE_ENV !== 'test') {
-  app.use(logger({ persist: true }))
-  app.use(logger({ persist: false }))
-}
+app.use(logger({ persist: true }))
+app.use(logger({ persist: false }))
 app.use(cors())
-
 app.use(authMiddleware)
 // use middleware
 

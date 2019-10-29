@@ -29,7 +29,7 @@ function jsonFormat(tokens, req, res) {
   })
 }
 
-module.exports = function logger({ persist }) {
+var loggerMiddlerware = function logger({ persist }) {
   var options = persist
     ? {
         stream: rfs('access.log', {
@@ -40,3 +40,7 @@ module.exports = function logger({ persist }) {
     : {}
   return morgan(jsonFormat, options)
 }
+
+var skippedLogger = () => (req, res, next) => next()
+
+module.exports = process.env.NODE_ENV !== 'test' ? loggerMiddlerware : skippedLogger
