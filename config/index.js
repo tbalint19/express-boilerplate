@@ -28,7 +28,7 @@ Are you sure config/${env}.js file exists?
 
 Fix:
  - Copy config/production.js as config/${env}.js
- - update the values (process.env.NODE_ENV -> custom local values)
+ - update the values (process.env.** -> custom local values)
  - relaunch the app
 
 (${env}.js will be gitignored)
