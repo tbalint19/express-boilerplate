@@ -1,22 +1,22 @@
-var express = require('express')
+const express = require('express')
 require('express-async-errors')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var cors = require('cors')
-var { createMiddleware } = require('@promster/express')
-var config = require(__dirname + '/../config')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const { createMiddleware } = require('@promster/express')
+const config = require(__dirname + '/../config')
 
-var errorHandler = require('./middleware/errorHandler')
-var authMiddleware = require('./middleware/authMiddleware')
-var logger = require('./middleware/logger')
+const errorHandler = require('./middleware/errorHandler')
+const authMiddleware = require('./middleware/authMiddleware')
+const logger = require('./middleware/logger')
 // require middleware
 
-var user = require('./routes/user')
-var role = require('./routes/role')
-var prometheus = require('./routes/actuator/prometheus')
+const user = require('./routes/user')
+const role = require('./routes/role')
+const prometheus = require('./routes/actuator/prometheus')
 // require routes
 
-var app = express()
+const app = express()
 
 app.use(createMiddleware({ app, options: config['prometheus'] }))
 app.use(bodyParser.json())

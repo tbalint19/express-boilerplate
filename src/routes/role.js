@@ -1,8 +1,8 @@
-var models = require('../models')
-var express = require('express')
-var router = express.Router()
-var googleApi = require('../api/google.js')
-var { authorize } = require('../utils/authorize')
+const models = require('../models')
+const express = require('express')
+const router = express.Router()
+const googleApi = require('../api/google.js')
+const { authorize } = require('../utils/authorize')
 
 router.post('/admin', async (req, res) => {
   authorize(req.user.is('ROOT'))

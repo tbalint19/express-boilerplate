@@ -1,6 +1,6 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
-  var Permission = sequelize.define('Permission', {
+  const Permission = sequelize.define('Permission', {
     name: DataTypes.STRING,
     scope: DataTypes.STRING,
     preAssignedTo: DataTypes.STRING,

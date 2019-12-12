@@ -1,10 +1,10 @@
 'use strict'
 
-var morgan = require('morgan')
-var os = require('os')
-var fs = require('fs')
-var path = require('path')
-var rfs = require('rotating-file-stream')
+const morgan = require('morgan')
+const os = require('os')
+const fs = require('fs')
+const path = require('path')
+const rfs = require('rotating-file-stream')
 
 morgan.token('hostname', function getHostname() {
   return os.hostname()
@@ -29,8 +29,8 @@ function jsonFormat(tokens, req, res) {
   })
 }
 
-var loggerMiddlerware = function logger({ persist }) {
-  var options = persist
+const loggerMiddlerware = function logger({ persist }) {
+  const options = persist
     ? {
         stream: rfs('access.log', {
           interval: '1d',
@@ -41,7 +41,7 @@ var loggerMiddlerware = function logger({ persist }) {
   return morgan(jsonFormat, options)
 }
 
-var skippedLogger = () => (req, res, next) => next()
+const skippedLogger = () => (req, res, next) => next()
 
 module.exports =
   process.env.NODE_ENV !== 'test' ? loggerMiddlerware : skippedLogger

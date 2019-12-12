@@ -1,6 +1,6 @@
-var express = require('express')
-var router = express.Router()
-var { getSummary, getContentType } = require('@promster/express')
+const express = require('express')
+const router = express.Router()
+const { getSummary, getContentType } = require('@promster/express')
 
 router.get('/metrics', (req, res) => {
   req.statusCode = 200

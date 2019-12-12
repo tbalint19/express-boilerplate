@@ -1,9 +1,9 @@
-var models = require('../models')
-var express = require('express')
-var router = express.Router()
-var googleApi = require('../api/google.js')
-var jwt = require('../utils/jwt')
-var { authorize } = require('../utils/authorize')
+const models = require('../models')
+const express = require('express')
+const router = express.Router()
+const googleApi = require('../api/google.js')
+const jwt = require('../utils/jwt')
+const { authorize } = require('../utils/authorize')
 
 router.post('/login', async (req, res) => {
   const authorizationCode = req.body.authorizationCode

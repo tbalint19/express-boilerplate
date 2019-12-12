@@ -1,16 +1,17 @@
 'use strict'
 
-var fs = require('fs')
-var path = require('path')
-var Sequelize = require('sequelize')
-var basename = path.basename(__filename)
-var config = require(__dirname + '/../../config')['database']
-var db = {}
+const fs = require('fs')
+const path = require('path')
+const Sequelize = require('sequelize')
+const basename = path.basename(__filename)
+const config = require(__dirname + '/../../config')['database']
+const db = {}
 
+let sequelize
 if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable], config)
+  sequelize = new Sequelize(process.env[config.use_env_variable], config)
 } else {
-  var sequelize = new Sequelize(
+  sequelize = new Sequelize(
     config.database,
     config.username,
     config.password,
@@ -31,7 +32,7 @@ fs.readdirSync(__dirname, { withFileTypes: true })
         )
       })
       .forEach((file) => {
-        var model = sequelize['import'](
+        const model = sequelize['import'](
           path.join(__dirname + '/' + dirname, file)
         )
         db[model.name] = model
