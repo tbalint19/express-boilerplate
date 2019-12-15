@@ -1,10 +1,12 @@
-'use strict'
+const { newDb, database, clearDb } = require('./util/db.js')
+const {
+  programaticallyPreassingRoot,
+  login
+} = require('./user-actions/user-endpoint')
 
-var app = require('../../src/app.js')
-var request = require('supertest')
-
-var { newDb, database, clearDb } = require('../util/db.js')
-var { programaticallyPreassingRoot, login } = require('./user.spec.js')
+const {
+  assignAdminRole
+} = require('./user-actions/role-endpoint')
 
 describe('User endpoint tests', () => {
   beforeAll(() => newDb())
@@ -36,11 +38,3 @@ describe('User endpoint tests', () => {
 
   test.todo('should not change root role to admin')
 })
-
-const assignAdminRole = async ({ as, to }) => {
-  const response = await request(app)
-    .post('/api/role/admin')
-    .set('Authorization', as)
-    .send({ email: to })
-  return response
-}

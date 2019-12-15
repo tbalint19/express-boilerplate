@@ -1,12 +1,12 @@
-'use strict'
+const { newDb, database, clearDb } = require('./util/db.js')
+const {
+  programaticallyPreassingRoot,
+  login,
+  blacklistUser,
+  whitelistUser,
+} = require('./user-actions/user-endpoint')
 
-var app = require('../../src/app.js')
-var request = require('supertest')
-var { parse } = require('../../src/utils/jwt.js')
-
-var { googleResponse } = require('../util/googleResponse.js')
-var { GoogleMock } = require('../util/googleMock.js')
-var { newDb, database, clearDb } = require('../util/db.js')
+const { parse } = require('../../src/utils/jwt.js')
 
 describe('User endpoint tests', () => {
   beforeAll(() => newDb())
@@ -103,50 +103,3 @@ describe('User endpoint tests', () => {
 
   test.todo('should whitelist admin as root')
 })
-
-const login = async ({ googleId, email }) => {
-  const googleApi = GoogleMock()
-  const userData = await googleResponse({ googleId, email })
-  googleApi.onPost('/oauth2/v4/token').reply(200, userData)
-
-  const response = await request(app)
-    .post('/api/user/login')
-    .send({ authorizationCode: '789xyz' })
-
-  googleApi.restore()
-
-  const sessionToken = response.body.sessionToken
-  return sessionToken
-}
-
-const programaticallyPreassingRoot = async (email) => {
-  const models = require('../../src/models')
-  await models.Role.create({
-    name: 'ROOT',
-    scope: null,
-    preAssignedTo: email,
-  })
-}
-
-const toggleUser = async ({ as, email, to }) => {
-  const response = await request(app)
-    .post('/api/user/blacklist')
-    .set('Authorization', as)
-    .send({ email, to })
-  return response
-}
-
-const blacklistUser = async ({ as, email }) => {
-  return await toggleUser({ as, email, to: true })
-}
-
-const whitelistUser = async ({ as, email }) => {
-  return await toggleUser({ as, email, to: false })
-}
-
-module.exports = {
-  programaticallyPreassingRoot,
-  login,
-  blacklistUser,
-  whitelistUser,
-}

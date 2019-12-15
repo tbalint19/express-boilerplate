@@ -1,4 +1,4 @@
-const { create } = require('../../src/utils/jwt.js')
+const { create } = require('../../../src/utils/jwt.js')
 
 const userDefaults = {
   iss: 'https://accounts.google.com',

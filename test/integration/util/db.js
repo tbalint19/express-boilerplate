@@ -1,4 +1,4 @@
-const database = require('../../src/models')
+const database = require('../../../src/models')
 
 const newDb = async () => {
   await database.sequelize.sync()
