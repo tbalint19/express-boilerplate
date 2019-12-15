@@ -7,10 +7,8 @@ class User {
   }
 
   setClient(jwt) {
-    this.client = jwt ?
-      request(app).set('Authorization', `${jwt}`) :
-      request(app)
+    this.client = jwt
+      ? request(app).set('Authorization', `${jwt}`)
+      : request(app)
   }
-
-
 }

@@ -7,19 +7,15 @@ const create = (payload) =>
       payload,
       jwtConfig.secret,
       { expiresIn: jwtConfig.lifeTime },
-      function(err, token) {
-        if (err) return reject(err)
-        else return resolve(token)
-      }
+      (err, token) => (err ? reject(err) : resolve(token))
     )
   )
 
 const verify = (token) =>
   new Promise((resolve, reject) =>
-    jwt.verify(token, jwtConfig.secret, function(err, payload) {
-      if (err) return reject(err)
-      else return resolve(payload)
-    })
+    jwt.verify(token, jwtConfig.secret, (err, payload) =>
+      err ? reject(err) : resolve(payload)
+    )
   )
 
 const parse = (token) => {
