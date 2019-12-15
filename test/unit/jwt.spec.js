@@ -1,8 +1,6 @@
 'use strict'
 
-var app = require('../../src/app')
-var expect = require('expect.js')
-var { parse } = require('../../src/utils/jwt.js')
+const { parse } = require('../../src/utils/jwt.js')
 
 describe('JWT tests', function() {
   it('should parse invalid jwt to null', async function() {
@@ -13,7 +11,7 @@ describe('JWT tests', function() {
     let payload = await parse(jwt)
 
     // then
-    expect(payload).to.be(null)
+    expect(payload).toBe(null)
   })
 
   it('should parse valid jwt to payload', async function() {
@@ -25,7 +23,7 @@ describe('JWT tests', function() {
     let payload = await parse(jwt)
 
     // then
-    expect(payload).to.eql({
+    expect(payload).toEqual({
       sub: '1234567890',
       name: 'John Doe',
       iat: 1516239022,

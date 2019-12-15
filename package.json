@@ -1,33 +1,19 @@
 {
   "name": "express-boilerplate",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "An express js boilerplate",
-  "author": "TBalint19 <tothbalint719@gmail.com>",
+  "author": "TBalint19",
   "private": true,
   "scripts": {
     "migrate": "node_modules/.bin/sequelize db:migrate",
-    "reset": "node ./scripts/resetDB.js",
+    "reset": "node ./migrations/resetDB.js",
     "start": "cross-env NODE_ENV=development DEBUG=express-sequelize node ./bin/www",
     "prod": "cross-env NODE_ENV=production node ./bin/www",
     "format": "./node_modules/.bin/prettier --write '{src,test}/**/*'",
     "format-check": "./node_modules/.bin/prettier --check '{src,test}/**/*'",
-    "test": "npm run test-unit && npm run test-integration",
-    "ut": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/unit/*.spec.js",
-    "it": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js",
-    "unit-tests": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/unit/*.spec.js > ./unit-coverage.txt",
-    "integration-tests": "cross-env NODE_ENV=test nyc ./node_modules/.bin/mocha test/integration/*.spec.js > ./integration-coverage.txt",
-    "coverage-check": "node CI/scripts/coverage.js",
-    "coverage-report": "http-server coverage",
-    "mutate": "cross-env NODE_ENV=test ./node_modules/@stryker-mutator/core/bin/stryker run",
-    "mutate-kill-rate-check": "node CI/scripts/mutateRate.js",
-    "mutation-report": "http-server reports/mutation/html",
-    "sonar-check": "node CI/scripts/sonar.js"
-  },
-  "nyc": {
-    "reporter": [
-      "text-summary",
-      "html"
-    ]
+    "test:unit": "jest test/unit --env node",
+    "test:integration": "jest test/integration --env node",
+    "sonar-check": "node CI/sonar.js"
   },
   "dependencies": {
     "@promster/express": "^3.2.0",
@@ -50,18 +36,11 @@
     "sequelize-cli": "^5.5.0"
   },
   "devDependencies": {
-    "@stryker-mutator/core": "^2.0.2",
-    "@stryker-mutator/html-reporter": "^2.0.0",
-    "@stryker-mutator/javascript-mutator": "^2.0.2",
-    "@stryker-mutator/mocha-framework": "^2.0.2",
-    "@stryker-mutator/mocha-runner": "^2.0.2",
     "axios-mock-adapter": "^1.17.0",
-    "sonarqube-scanner": "^2.4.1",
-    "expect.js": "^0.3.1",
-    "mocha": "^6.0.0",
-    "nyc": "^14.1.1",
+    "jest": "^24.9.0",
     "prettier": "1.18.2",
-    "supertest": "^2.0.0",
-    "sqlite3": "^4.1.0"
+    "sonarqube-scanner": "^2.4.1",
+    "sqlite3": "^4.1.0",
+    "supertest": "^4.0.0"
   }
 }

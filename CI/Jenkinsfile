@@ -6,6 +6,7 @@ node('linux && docker') {
   branch = checkout(scm).GIT_BRANCH
   commitHash = checkout(scm).GIT_COMMIT
   projectName = sanitizeProjectName(branch)
+  imageName = "expressapp"
 
   sh "echo Branch: ${branch}, Commit hash: ${commitHash}, Project name: ${projectName}, Build id: ${env.BUILD_ID}"
 
@@ -16,8 +17,6 @@ node('linux && docker') {
       checkCodeFormat()
       runUnitTests()
       runIntegrationTests()
-      checkCoverage()
-      validateTestCases()
       sonar(projectName)
       dockerize(projectName)
       artifactoryUpload(projectName)
@@ -78,20 +77,6 @@ def runIntegrationTests() {
   }
 }
 
-def checkCoverage() {
-  stage('Code coverage check') {
-    sh 'npm run coverage-check'
-  }
-}
-
-def validateTestCases() {
-  stage('Validate test cases') {
-    sh 'rm -rf ./.stryker-tmp'
-    sh 'npm run mutate'
-    sh 'npm run mutate-kill-rate-check'
-  }
-}
-
 def sonar(String projectName) {
   stage('Static code analysis') {
     sh "npm --branch=${projectName} run sonar-check"
@@ -100,7 +85,7 @@ def sonar(String projectName) {
 
 def dockerize(String projectName) {
   stage('Dockerize') {
-    sh "docker build . -t ${projectName}"
+    sh "docker build . -t ${imageName}"
   }
 }
 
@@ -108,8 +93,8 @@ def artifactoryUpload(String projectName) {
   stage('Upload to artifactory') {
     if (isMaster(branch)) {
       def registry = "repository.vodafone.hu/docker-cas"
-      sh "docker tag ${projectName} ${registry}/${projectName}:${env.BUILD_ID}"
-      sh "docker push ${registry}/${projectName}"
+      sh "docker tag ${imageName} ${registry}/${imageName}:${env.BUILD_ID}"
+      sh "docker push ${registry}/${imageName}:${env.BUILD_ID}"
     } else {
       Utils.markStageSkippedForConditional(env.STAGE_NAME)
     }

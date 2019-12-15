@@ -1,11 +1,11 @@
+const database = require('../../src/models')
+
 const newDb = async () => {
-  const models = require('../../src/models')
-  await models.sequelize.sync()
-  return models
+  await database.sequelize.sync()
 }
 
 const clearDb = async () => {
-  const { sequelize, Sequelize, ...modelEntries } = require('../../src/models')
+  const { sequelize, Sequelize, ...modelEntries } = database
   const models = Object.values(modelEntries)
   await Promise.all(models.map((model) => model.destroy({ truncate: true })))
   return models
@@ -13,5 +13,6 @@ const clearDb = async () => {
 
 module.exports = {
   newDb,
+  database,
   clearDb,
 }

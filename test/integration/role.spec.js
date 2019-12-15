@@ -1,22 +1,16 @@
 'use strict'
 
 var app = require('../../src/app.js')
-var expect = require('expect.js')
 var request = require('supertest')
 
-var { newDb, clearDb } = require('../util/db.js')
+var { newDb, database, clearDb } = require('../util/db.js')
 var { programaticallyPreassingRoot, login } = require('./user.spec.js')
 
-describe('User endpoint tests', function() {
-  before(async function() {
-    this.models = await newDb()
-  })
+describe('User endpoint tests', () => {
+  beforeAll(() => newDb())
+  beforeEach(() => clearDb())
 
-  beforeEach(async function() {
-    await clearDb()
-  })
-
-  it('should preassign admin role as root', async function() {
+  it('should preassign admin role as root', async () => {
     // given
     await programaticallyPreassingRoot('rootUser@company.hu')
     const sessionToken = await login({
@@ -31,16 +25,16 @@ describe('User endpoint tests', function() {
     })
 
     // then
-    const users = await this.models.User.findAll()
-    expect(users).to.have.length(1)
+    const users = await database.User.findAll()
+    expect(users).toHaveLength(1)
 
-    const roles = await this.models.Role.findAll()
-    expect(roles).to.have.length(2)
+    const roles = await database.Role.findAll()
+    expect(roles).toHaveLength(2)
   })
 
-  it('should not preassign admin role unauthenticated')
+  test.todo('should not preassign admin role unauthenticated')
 
-  it('should not change root role to admin')
+  test.todo('should not change root role to admin')
 })
 
 const assignAdminRole = async ({ as, to }) => {
@@ -48,6 +42,5 @@ const assignAdminRole = async ({ as, to }) => {
     .post('/api/role/admin')
     .set('Authorization', as)
     .send({ email: to })
-    .expect(201)
   return response
 }

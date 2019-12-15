@@ -1,8 +1,11 @@
 var sonarqubeScanner = require('sonarqube-scanner');
 var request = require('request');
 
-var config = require('../config.json')
-var packageJson = require('../../package.json')
+var config = { sonar: {
+  "url": "http://sonarqube.vodafone.hu:9000",
+  "maxIssues": 0,
+  "maxDuplications": 0
+}}
 
 var projectName = process.env.npm_config_branch
 var serverUrl = config.sonar.url

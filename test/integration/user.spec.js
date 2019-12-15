@@ -1,24 +1,18 @@
 'use strict'
 
 var app = require('../../src/app.js')
-var expect = require('expect.js')
 var request = require('supertest')
 var { parse } = require('../../src/utils/jwt.js')
 
 var { googleResponse } = require('../util/googleResponse.js')
 var { GoogleMock } = require('../util/googleMock.js')
-var { newDb, clearDb } = require('../util/db.js')
+var { newDb, database, clearDb } = require('../util/db.js')
 
-describe('User endpoint tests', function() {
-  before(async function() {
-    this.models = await newDb()
-  })
+describe('User endpoint tests', () => {
+  beforeAll(() => newDb())
+  beforeEach(() => clearDb())
 
-  beforeEach(async function() {
-    await clearDb()
-  })
-
-  it('should login as user without preassigned role', async function() {
+  it('should login as user without preassigned role', async () => {
     // given
 
     // when
@@ -29,15 +23,15 @@ describe('User endpoint tests', function() {
 
     // then
     const sessionData = parse(sessionToken)
-    expect(sessionData.googleId).to.be('1')
-    expect(sessionData.email).to.be('randomUser@company.hu')
-    expect(sessionData.role.name).to.be('USER')
+    expect(sessionData.googleId).toBe('1')
+    expect(sessionData.email).toBe('randomUser@company.hu')
+    expect(sessionData.role.name).toBe('USER')
 
-    const users = await this.models.User.findAll()
-    expect(users).to.have.length(1)
+    const users = await database.User.findAll()
+    expect(users).toHaveLength(1)
   })
 
-  it('should login as root with programatically preassigned root role', async function() {
+  it('should login as root with programatically preassigned root role', async () => {
     // given
     await programaticallyPreassingRoot('rootUser@company.hu')
 
@@ -49,12 +43,12 @@ describe('User endpoint tests', function() {
 
     // then
     const sessionData = parse(sessionToken)
-    expect(sessionData.googleId).to.be('1')
-    expect(sessionData.email).to.be('rootUser@company.hu')
-    expect(sessionData.role.name).to.be('ROOT')
+    expect(sessionData.googleId).toBe('1')
+    expect(sessionData.email).toBe('rootUser@company.hu')
+    expect(sessionData.role.name).toBe('ROOT')
   })
 
-  it('should blacklist user as root', async function() {
+  it('should blacklist user as root', async () => {
     // given
     await programaticallyPreassingRoot('rootUser@company.hu')
     await login({ googleId: '2', email: 'randomUser@company.hu' })
@@ -70,16 +64,16 @@ describe('User endpoint tests', function() {
     })
 
     // then
-    const users = await this.models.User.findAll()
-    expect(users).to.have.length(2)
+    const users = await database.User.findAll()
+    expect(users).toHaveLength(2)
 
-    const blacklistedUser = await this.models.User.findOne({
+    const blacklistedUser = await database.User.findOne({
       where: { email: 'randomUser@company.hu' },
     })
-    expect(blacklistedUser.isBlacklisted).to.be(true)
+    expect(blacklistedUser.isBlacklisted).toBe(true)
   })
 
-  it('should whitelist user as root', async function() {
+  it('should whitelist user as root', async () => {
     // given
     await programaticallyPreassingRoot('rootUser@company.hu')
     await login({ googleId: '2', email: 'randomUser@company.hu' })
@@ -96,18 +90,18 @@ describe('User endpoint tests', function() {
     })
 
     // then
-    const users = await this.models.User.findAll()
-    expect(users).to.have.length(2)
+    const users = await database.User.findAll()
+    expect(users).toHaveLength(2)
 
-    const blacklistedUser = await this.models.User.findOne({
+    const blacklistedUser = await database.User.findOne({
       where: { email: 'randomUser@company.hu' },
     })
-    expect(blacklistedUser.isBlacklisted).to.be(false)
+    expect(blacklistedUser.isBlacklisted).toBe(false)
   })
 
-  it('should blacklist admin as root')
+  test.todo('should blacklist admin as root')
 
-  it('should whitelist admin as root')
+  test.todo('should whitelist admin as root')
 })
 
 const login = async ({ googleId, email }) => {
@@ -118,7 +112,6 @@ const login = async ({ googleId, email }) => {
   const response = await request(app)
     .post('/api/user/login')
     .send({ authorizationCode: '789xyz' })
-    .expect(200)
 
   googleApi.restore()
 
@@ -140,7 +133,6 @@ const toggleUser = async ({ as, email, to }) => {
     .post('/api/user/blacklist')
     .set('Authorization', as)
     .send({ email, to })
-    .expect(200)
   return response
 }
 
