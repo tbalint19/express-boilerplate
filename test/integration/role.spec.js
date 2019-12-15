@@ -1,12 +1,10 @@
 const { newDb, database, clearDb } = require('./util/db.js')
 const {
   programaticallyPreassingRoot,
-  login
+  login,
 } = require('./user-actions/user-endpoint')
 
-const {
-  assignAdminRole
-} = require('./user-actions/role-endpoint')
+const { assignAdminRole } = require('./user-actions/role-endpoint')
 
 describe('User endpoint tests', () => {
   beforeAll(() => newDb())

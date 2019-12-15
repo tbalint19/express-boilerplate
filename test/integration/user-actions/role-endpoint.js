@@ -10,5 +10,5 @@ const assignAdminRole = async ({ as, to }) => {
 }
 
 module.exports = {
-  assignAdminRole
+  assignAdminRole,
 }
