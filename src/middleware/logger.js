@@ -1,5 +1,3 @@
-'use strict'
-
 const morgan = require('morgan')
 const os = require('os')
 const fs = require('fs')

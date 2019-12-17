@@ -1,5 +1,3 @@
-'use strict'
-
 const { parse } = require('../../src/utils/jwt.js')
 
 describe('JWT tests', function() {
