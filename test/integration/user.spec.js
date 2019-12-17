@@ -1,4 +1,4 @@
-const { newDb, database, clearDb } = require('./util/db.js')
+const { newDb, models, clearDb } = require('./util/db.js')
 const {
   programaticallyPreassingRoot,
   login,
@@ -27,7 +27,7 @@ describe('User endpoint tests', () => {
     expect(sessionData.email).toBe('randomUser@company.hu')
     expect(sessionData.role.name).toBe('USER')
 
-    const users = await database.User.findAll()
+    const users = await models.User.findAll()
     expect(users).toHaveLength(1)
   })
 
@@ -64,10 +64,10 @@ describe('User endpoint tests', () => {
     })
 
     // then
-    const users = await database.User.findAll()
+    const users = await models.User.findAll()
     expect(users).toHaveLength(2)
 
-    const blacklistedUser = await database.User.findOne({
+    const blacklistedUser = await models.User.findOne({
       where: { email: 'randomUser@company.hu' },
     })
     expect(blacklistedUser.isBlacklisted).toBe(true)
@@ -90,10 +90,10 @@ describe('User endpoint tests', () => {
     })
 
     // then
-    const users = await database.User.findAll()
+    const users = await models.User.findAll()
     expect(users).toHaveLength(2)
 
-    const blacklistedUser = await database.User.findOne({
+    const blacklistedUser = await models.User.findOne({
       where: { email: 'randomUser@company.hu' },
     })
     expect(blacklistedUser.isBlacklisted).toBe(false)

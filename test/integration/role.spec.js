@@ -1,4 +1,4 @@
-const { newDb, database, clearDb } = require('./util/db.js')
+const { newDb, models, clearDb } = require('./util/db.js')
 const {
   programaticallyPreassingRoot,
   login,
@@ -25,10 +25,10 @@ describe('User endpoint tests', () => {
     })
 
     // then
-    const users = await database.User.findAll()
+    const users = await models.User.findAll()
     expect(users).toHaveLength(1)
 
-    const roles = await database.Role.findAll()
+    const roles = await models.Role.findAll()
     expect(roles).toHaveLength(2)
   })
 

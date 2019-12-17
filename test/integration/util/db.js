@@ -8,11 +8,10 @@ const clearDb = async () => {
   const { sequelize, Sequelize, ...modelEntries } = database
   const models = Object.values(modelEntries)
   await Promise.all(models.map((model) => model.destroy({ truncate: true })))
-  return models
 }
 
 module.exports = {
   newDb,
-  database,
+  models: database,
   clearDb,
 }
