@@ -11,8 +11,8 @@
     "prod": "cross-env NODE_ENV=production node ./bin/www",
     "format": "./node_modules/.bin/prettier --write '{src,test}/**/*'",
     "format-check": "./node_modules/.bin/prettier --check '{src,test}/**/*'",
-    "test:unit": "jest test/unit --env node",
-    "test:integration": "jest test/integration --env node",
+    "test:unit": "jest test/unit --env node --config jest.unit.config.js",
+    "test:integration": "jest test/integration --env node --config jest.integration.config.js",
     "sonar-check": "node CI/sonar.js"
   },
   "dependencies": {
