@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const app = require('../src/app')
-const debug = require('debug')('express-sequelize')
+const debug = require('debug')('app')
 const http = require('http')
 const models = require('../src/models')
 const port = parseInt(process.env.PORT || '3000')
@@ -10,7 +10,7 @@ const onError = (error) => {
     throw error
   }
 
-  var bind = typeof port === 'string'
+  const bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port
 
@@ -29,8 +29,8 @@ const onError = (error) => {
 }
 
 const onListening = () => {
-  var addr = server.address()
-  var bind = typeof addr === 'string'
+  const addr = server.address()
+  const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port
   debug('Listening on ' + bind)
@@ -40,9 +40,9 @@ app.set('port', port)
 const server = http.createServer(app)
 
 models.sequelize.sync().then(() => {
+  server.on('error', onError)
+  server.on('listening', onListening)
   server.listen(port, () => {
     debug('Express server listening on port ' + server.address().port)
   })
-  server.on('error', onError)
-  server.on('listening', onListening)
 })
