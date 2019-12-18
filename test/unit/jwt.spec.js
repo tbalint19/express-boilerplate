@@ -1,7 +1,33 @@
-const { parse } = require('../../src/utils/jwt.js')
+const { create, verify, parse } = require('../../src/utils/jwt.js')
+const MockDate = require('mockdate')
+const jwtConfig = require('../../config')['jwt']
+const jwtSecret = jwtConfig.secret
+const jwtLifeTimeInMillis = jwtConfig.lifeTime.split("h")[0] * 60 * 60 * 1000
 
 describe('JWT tests', function() {
-  it('should parse invalid jwt to null', async function() {
+
+  it('should create jwt', async () => {
+    // given
+    const randomPointInTime = 1516239000
+    const jwtExpiration = randomPointInTime + jwtLifeTimeInMillis
+    const data = { foo: 'bar' }
+
+    MockDate.set(new Date(randomPointInTime))
+
+    // when
+    let jwt = await create(data)
+
+    // then
+    let payload = await parse(jwt)
+    expect(payload).toEqual(
+      { ...data,
+        iat: randomPointInTime/1000,
+        exp: jwtExpiration/1000
+      }
+    )
+  })
+
+  it('should parse invalid jwt to null', async () => {
     // given
     let jwt = 'abc'
 
@@ -10,21 +36,5 @@ describe('JWT tests', function() {
 
     // then
     expect(payload).toBe(null)
-  })
-
-  it('should parse valid jwt to payload', async function() {
-    // given
-    let jwt =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-
-    // when
-    let payload = await parse(jwt)
-
-    // then
-    expect(payload).toEqual({
-      sub: '1234567890',
-      name: 'John Doe',
-      iat: 1516239022,
-    })
   })
 })
