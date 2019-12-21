@@ -32,7 +32,29 @@ describe('User endpoint tests', () => {
     expect(roles).toHaveLength(2)
   })
 
-  test.todo('should not preassign admin role unauthenticated')
+  it('should assign admin role as root to user', async () => {
+    // given
+    await programaticallyPreassingRoot('rootUser@company.hu')
+    await login({
+      googleId: '2',
+      email: 'randomUser@company.hu',
+    })
+    const sessionToken = await login({
+      googleId: '1',
+      email: 'rootUser@company.hu',
+    })
 
-  test.todo('should not change root role to admin')
+    // when
+    const response = await assignAdminRole({
+      as: sessionToken,
+      to: 'randomUser@company.hu',
+    })
+
+    // then
+    const users = await models.User.findAll()
+    expect(users).toHaveLength(2)
+
+    const roles = await models.Role.findAll()
+    expect(roles).toHaveLength(2)
+  })
 })
