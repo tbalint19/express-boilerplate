@@ -108,14 +108,14 @@ describe('User endpoint tests', () => {
       "ROOT": { email: 'rootUser@company.hu' },
     }
 
-    await programaticallyPreassingRoot('rootUser@company.hu')
-    users['ROOT'].token = await login({ googleId: '1', email: 'rootUser@company.hu' })
+    await programaticallyPreassingRoot(users['ROOT'].email)
+    users['ROOT'].token = await login({ googleId: '1', email: users['ROOT'].email })
     await assignAdminRole({
       as: users['ROOT'].token,
-      to: 'adminUser@company.hu',
+      to: users['ADMIN'].email,
     })
-    users['ADMIN'].token = await login({ googleId: '2', email: 'adminUser@company.hu' })
-    users['USER'].token = await login({ googleId: '3', email: 'randomUser@company.hu' })
+    users['ADMIN'].token = await login({ googleId: '2', email: users['ADMIN'].email })
+    users['USER'].token = await login({ googleId: '3', email: users['USER'].email })
 
     // when
     const response = await blacklistUser({
