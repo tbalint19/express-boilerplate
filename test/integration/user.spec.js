@@ -7,6 +7,7 @@ const {
   blacklistUser,
   whitelistUser,
 } = require('./user-actions/user-endpoint')
+const { assignAdminRole } = require('./user-actions/role-endpoint')
 
 const { parse } = require('../../src/utils/jwt.js')
 
@@ -94,27 +95,39 @@ describe('User endpoint tests', () => {
     expect(sessionData.role.name).toBe('ROOT')
   })
 
-  it('should blacklist user as root', async () => {
+  test.each([
+    ["USER", "ADMIN"],
+    ["USER", "ROOT"],
+    ["ADMIN", "ROOT"],
+  ])
+  ('should blacklist %s as %s', async (target, as) => {
     // given
+    const users = {
+      "USER": { email: 'randomUser@company.hu' },
+      "ADMIN": { email: 'adminUser@company.hu' },
+      "ROOT": { email: 'rootUser@company.hu' },
+    }
+
     await programaticallyPreassingRoot('rootUser@company.hu')
-    await login({ googleId: '2', email: 'randomUser@company.hu' })
-    const sessionToken = await login({
-      googleId: '1',
-      email: 'rootUser@company.hu',
+    users['ROOT'].token = await login({ googleId: '1', email: 'rootUser@company.hu' })
+    await assignAdminRole({
+      as: users['ROOT'].token,
+      to: 'adminUser@company.hu',
     })
+    users['ADMIN'].token = await login({ googleId: '2', email: 'adminUser@company.hu' })
+    users['USER'].token = await login({ googleId: '3', email: 'randomUser@company.hu' })
 
     // when
     const response = await blacklistUser({
-      as: sessionToken,
-      email: 'randomUser@company.hu',
+      as: users[as].token,
+      email: users[target].email,
     })
 
     // then
-    const users = await models.User.findAll()
-    expect(users).toHaveLength(2)
+    expect(response.status).toBe(200)
 
     const blacklistedUser = await models.User.findOne({
-      where: { email: 'randomUser@company.hu' },
+      where: { email: users[target].email },
     })
     expect(blacklistedUser.isBlacklisted).toBe(true)
   })
