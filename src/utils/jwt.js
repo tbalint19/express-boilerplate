@@ -1,20 +1,20 @@
 const jwt = require('jsonwebtoken')
 const jwtConfig = require('../../config')['jwt']
 
-const create = (payload, secret=jwtConfig.secret) =>
+const create = (payload) =>
   new Promise((resolve, reject) =>
     jwt.sign(
       payload,
-      secret,
+      jwtConfig.secret,
       { expiresIn: jwtConfig.lifeTime },
-      (err, token) => (err ? reject(err) : resolve(token))
+      (err, token) => (err ? resolve(null) : resolve(token))
     )
   )
 
-const verify = (token, secret=jwtConfig.secret) =>
+const verify = (token) =>
   new Promise((resolve, reject) =>
-    jwt.verify(token, secret, (err, payload) =>
-      err ? reject(err) : resolve(payload)
+    jwt.verify(token, jwtConfig.secret, (err, payload) =>
+      err ? resolve(null) : resolve(payload)
     )
   )
 
