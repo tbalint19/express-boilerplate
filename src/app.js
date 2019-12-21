@@ -6,8 +6,6 @@ const cors = require('cors')
 const { createMiddleware } = require('@promster/express')
 const config = require(__dirname + '/../config')
 
-console.log("-");
-
 const errorHandler = require('./middleware/errorHandler')
 const authMiddleware = require('./middleware/authMiddleware')
 const logger = require('./middleware/logger')
