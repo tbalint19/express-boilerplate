@@ -5,6 +5,9 @@ module.exports = {
     "src/utils/*.js",
     "!**/node_modules/**"
   ],
+  coverageReporters: [
+    "json", "lcov", "text", "clover"
+  ],
   coverageThreshold: {
     global: {
       "branches": 100,

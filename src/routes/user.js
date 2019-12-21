@@ -38,9 +38,13 @@ router.post('/login', async (req, res) => {
           { transaction }
         )
     })
-  } else if (existingUser.email != email)
+  }
+
+  if (existingUser.email != email)
     await models.User.update({ email }, { where: { googleId } })
-  else if (existingUser.isBlacklisted) return res.sendStatus(401)
+
+  if (existingUser.isBlacklisted)
+    return res.sendStatus(401)
 
   existingUser = await existingUser.reload()
   const role = await existingUser.getRole({ attributes: ['name', 'scope'] })

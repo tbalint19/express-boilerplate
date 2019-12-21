@@ -6,6 +6,9 @@ module.exports = {
     "!src/routes/actuator/*.js",
     "!**/node_modules/**"
   ],
+  coverageReporters: [
+    "json", "lcov", "text", "clover"
+  ],
   coverageThreshold: {
     global: {
       "branches": 100,

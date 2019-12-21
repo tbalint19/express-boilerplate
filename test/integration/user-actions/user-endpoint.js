@@ -19,6 +19,26 @@ const login = async ({ googleId, email }) => {
   return sessionToken
 }
 
+const loginWithoutAuthentication = async () => {
+  const googleApi = GoogleMock()
+  googleApi.onPost('/oauth2/v4/token').reply(401)
+
+  const response = await request(app)
+    .post('/api/user/login')
+    .send({ authorizationCode: '789xyz' })
+
+  googleApi.restore()
+
+  return response
+}
+
+const loginWithoutAuthCode = async () => {
+  const response = await request(app)
+    .post('/api/user/login')
+    .send({})
+  return response
+}
+
 const programaticallyPreassingRoot = async (email) => {
   const models = require('../../../src/models')
   await models.Role.create({
@@ -47,6 +67,8 @@ const whitelistUser = async ({ as, email }) => {
 module.exports = {
   programaticallyPreassingRoot,
   login,
+  loginWithoutAuthentication,
+  loginWithoutAuthCode,
   blacklistUser,
   whitelistUser,
 }
