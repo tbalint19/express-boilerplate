@@ -13,7 +13,7 @@ const logger = require('./middleware/logger')
 
 const user = require('./routes/user')
 const role = require('./routes/role')
-const prometheus = require('./routes/actuator/prometheus')
+      const prometheus = require('./routes/actuator/prometheus')
 // require routes
 
 const app = express()
