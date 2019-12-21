@@ -4,7 +4,7 @@ const jwtConfig = require('../../config')['jwt']
 const jwtSecret = jwtConfig.secret
 const jwtLifeTimeInMillis = jwtConfig.lifeTime.split("h")[0] * 60 * 60 * 1000
 
-describe('JWT tests', function() {
+describe('JWT tests', () => {
 
   it('should create jwt', async () => {
     // given
