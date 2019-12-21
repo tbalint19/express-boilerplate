@@ -87,6 +87,6 @@ describe('JWT tests', () => {
     let payload = await parse(jwt)
 
     // then
-    expect(payload).toBe(null)
+    expect(payload).toBe(1)
   })
 })
