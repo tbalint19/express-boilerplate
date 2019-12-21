@@ -2,10 +2,9 @@ const { create, verify, parse } = require('../../src/utils/jwt.js')
 const MockDate = require('mockdate')
 const jwtConfig = require('../../config')['jwt']
 const jwtSecret = jwtConfig.secret
-const jwtLifeTimeInMillis = jwtConfig.lifeTime.split("h")[0] * 60 * 60 * 1000
+const jwtLifeTimeInMillis = jwtConfig.lifeTime.split('h')[0] * 60 * 60 * 1000
 
 describe('JWT tests', () => {
-
   it('should create jwt', async () => {
     // given
     const randomPointInTime = 1516239000
@@ -19,12 +18,11 @@ describe('JWT tests', () => {
 
     // then
     const payload = await parse(jwt)
-    expect(payload).toEqual(
-      { ...data,
-        iat: randomPointInTime/1000,
-        exp: jwtExpiration/1000
-      }
-    )
+    expect(payload).toEqual({
+      ...data,
+      iat: randomPointInTime / 1000,
+      exp: jwtExpiration / 1000,
+    })
   })
 
   it('should verify valid jwt', async () => {
@@ -40,12 +38,11 @@ describe('JWT tests', () => {
     const payload = await verify(jwt)
 
     // then
-    expect(payload).toEqual(
-      { ...data,
-        iat: randomPointInTime/1000,
-        exp: jwtExpiration/1000
-      }
-    )
+    expect(payload).toEqual({
+      ...data,
+      iat: randomPointInTime / 1000,
+      exp: jwtExpiration / 1000,
+    })
   })
 
   it('should not verify expired jwt', async () => {

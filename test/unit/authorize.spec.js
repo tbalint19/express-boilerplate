@@ -1,7 +1,6 @@
 const { authorize } = require('../../src/utils/authorize.js')
 
 describe('Authorization tests', () => {
-
   it('should not throw for true', async () => {
     // given
     const userRole = 'USER'
@@ -23,5 +22,4 @@ describe('Authorization tests', () => {
     // then
     expect(() => authorize(userRole == requiredRole)).toThrow()
   })
-
 })

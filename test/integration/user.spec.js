@@ -95,42 +95,49 @@ describe('User endpoint tests', () => {
     expect(sessionData.role.name).toBe('ROOT')
   })
 
-  test.each([
-    ["USER", "ADMIN"],
-    ["USER", "ROOT"],
-    ["ADMIN", "ROOT"],
-  ])
-  ('should blacklist %s as %s', async (target, as) => {
-    // given
-    const users = {
-      "USER": { email: 'randomUser@company.hu' },
-      "ADMIN": { email: 'adminUser@company.hu' },
-      "ROOT": { email: 'rootUser@company.hu' },
+  test.each([['USER', 'ADMIN'], ['USER', 'ROOT'], ['ADMIN', 'ROOT']])(
+    'should blacklist %s as %s',
+    async (target, as) => {
+      // given
+      const users = {
+        USER: { email: 'randomUser@company.hu' },
+        ADMIN: { email: 'adminUser@company.hu' },
+        ROOT: { email: 'rootUser@company.hu' },
+      }
+
+      await programaticallyPreassingRoot(users['ROOT'].email)
+      users['ROOT'].token = await login({
+        googleId: '1',
+        email: users['ROOT'].email,
+      })
+      await assignAdminRole({
+        as: users['ROOT'].token,
+        to: users['ADMIN'].email,
+      })
+      users['ADMIN'].token = await login({
+        googleId: '2',
+        email: users['ADMIN'].email,
+      })
+      users['USER'].token = await login({
+        googleId: '3',
+        email: users['USER'].email,
+      })
+
+      // when
+      const response = await blacklistUser({
+        as: users[as].token,
+        email: users[target].email,
+      })
+
+      // then
+      expect(response.status).toBe(200)
+
+      const blacklistedUser = await models.User.findOne({
+        where: { email: users[target].email },
+      })
+      expect(blacklistedUser.isBlacklisted).toBe(true)
     }
-
-    await programaticallyPreassingRoot(users['ROOT'].email)
-    users['ROOT'].token = await login({ googleId: '1', email: users['ROOT'].email })
-    await assignAdminRole({
-      as: users['ROOT'].token,
-      to: users['ADMIN'].email,
-    })
-    users['ADMIN'].token = await login({ googleId: '2', email: users['ADMIN'].email })
-    users['USER'].token = await login({ googleId: '3', email: users['USER'].email })
-
-    // when
-    const response = await blacklistUser({
-      as: users[as].token,
-      email: users[target].email,
-    })
-
-    // then
-    expect(response.status).toBe(200)
-
-    const blacklistedUser = await models.User.findOne({
-      where: { email: users[target].email },
-    })
-    expect(blacklistedUser.isBlacklisted).toBe(true)
-  })
+  )
 
   it('should whitelist user as root', async () => {
     // given
@@ -184,5 +191,4 @@ describe('User endpoint tests', () => {
     // then
     expect(sessionToken).toBe(undefined)
   })
-
 })
