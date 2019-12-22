@@ -15,3 +15,4 @@ config/*
 !config/index.js
 !config/production.js
 !config/test.js
+.scannerwork

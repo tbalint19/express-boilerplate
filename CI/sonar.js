@@ -1,15 +1,26 @@
 var sonarqubeScanner = require('sonarqube-scanner');
 var request = require('request');
 
+/*
+-Dsonar.projectKey=tbalint19_express-boilerplate
+-Dsonar.organization=tbalint19
+-Dsonar.sources=.
+-Dsonar.host.url=https://sonarcloud.io
+-Dsonar.login=34e00bc9e5b7c395b70cad658cfe40eef2c3eb5e
+*/
+
 var config = { sonar: {
-  "url": "http://sonarqube.vodafone.hu:9000",
+  //"url": "http://sonarqube.vodafone.hu:9000",
+  "url": "https://sonarcloud.io",
   "maxIssues": 0,
   "maxDuplications": 0
 }}
 
-var projectName = process.env.npm_config_branch
+//var projectName = process.env.npm_config_branch
+var projectName = "tbalint19_express-boilerplate"
 var serverUrl = config.sonar.url
-var bugUrl = serverUrl + "/api/issues/search?componentRoots=" + projectName + "&pageSize=-1&p=1"
+//var bugUrl = serverUrl + "/api/issues/search?componentRoots=" + projectName + "&pageSize=-1&p=1"
+var bugUrl = serverUrl + "/api/issues/search?organization=" + "tbalint19" + "&pageSize=-1&p=1&resolved=false"
 // http://sonarqube.vodafone.hu:9000/api/issues/search?componentRoots=projectKey&pageSize=500&p=1
 var duplicationsUrl = serverUrl + "/api/measures/component_tree?baseComponentKey=" + projectName + "&metricKeys=duplicated_lines&pageSize=500&p=1"
 // http://sonarqube.vodafone.hu:9000/api/measures/component_tree?baseComponentKey=projectKey&metricKeys=duplicated_lines&p=1
@@ -29,8 +40,10 @@ var sonarJob = function(callback) {
       'sonar.sources': 'src',
       'sonar.scm.forceReloadAll': 'true',
       'sonar.scm.exclusions.disabled': 'false',
-      'sonar.projectName': projectName,
-      'sonar.projectKey': projectName
+      'sonar.organization': "tbalint19",
+      //'sonar.projectName': projectName,
+      'sonar.projectKey': projectName,
+      'sonar.login': "34e00bc9e5b7c395b70cad658cfe40eef2c3eb5e" // maybe not needed
     }
   }, callback);
 }

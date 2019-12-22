@@ -49,9 +49,8 @@ var authMiddleware = async (req, res, next) => {
     req.user = new SessionUser(payload)
   } catch (e) {
     req.user = new AnonymusUser()
-  } finally {
-    return next()
   }
+  return next()
 }
 
 module.exports = authMiddleware

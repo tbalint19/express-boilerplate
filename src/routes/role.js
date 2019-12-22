@@ -17,12 +17,13 @@ router.post('/admin', async (req, res) => {
       { name: 'ADMIN' },
       { where: { UserId: target.id } }
     )
-  } else
+  } else {
     await models.Role.create({
       name: 'ADMIN',
       scope: null,
       preAssignedTo: email,
     })
+  }
 
   res.sendStatus(201)
 })
