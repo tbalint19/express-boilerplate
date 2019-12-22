@@ -14,7 +14,7 @@
     "test:unit": "jest test/unit --env node --config jest.unit.config.js",
     "test:integration": "jest test/integration --env node --config jest.integration.config.js",
     "sonar-check": "node CI/sonar.js",
-    "ci": "npm run format-check && npm run test:unit && npm run test:integration && npm run sonar-check"
+    "prep": "npm run format && npm run test:unit && npm run test:integration"
   },
   "dependencies": {
     "@promster/express": "^3.2.0",
