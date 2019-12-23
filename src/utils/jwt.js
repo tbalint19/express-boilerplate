@@ -3,7 +3,11 @@ const jwtConfig = require('../../config')['jwt']
 
 const create = (payload) =>
   new Promise((resolve, reject) =>
-    jwt.sign(payload,jwtConfig.secret,{ expiresIn: jwtConfig.lifeTime },(err, token) => (err ? resolve(null) : resolve(token))
+    jwt.sign(
+      payload,
+      jwtConfig.secret,
+      { expiresIn: jwtConfig.lifeTime },
+      (err, token) => (err ? resolve(null) : resolve(token))
     )
   )
 
