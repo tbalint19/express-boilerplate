@@ -6,8 +6,7 @@ const create = (payload) =>
     jwt.sign(
       payload,
       jwtConfig.secret,
-      { expiresIn: jwtConfig.lifeTime },
-      (err, token) => (err ? resolve(null) : resolve(token))
+      { expiresIn: jwtConfig.lifeTime },(err, token) => (err ? resolve(null) : resolve(token))
     )
   )
 
