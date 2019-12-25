@@ -23,6 +23,7 @@
   - rename app folder
   - duplicate @config/test.js as @config/development.js
   - install dependencies
+  - rename project in package.json (+author, description)
 
   ```bash
   mv express-boilerplate backend
@@ -59,8 +60,8 @@
   - Edit @/CI/sonar/config.json
   - sonar.organization is your username
   - sonar.projectKey is user_name-of-your-choice
-  - sonar.login...
-  - gitgnore if needed
+  - sonar.login: [Avatar] -> My account -> Security -> Generate
+  - gitgnore if needed (and use private sonar as well, if sensitive)
 
   ```bash
   npm sonar-check
@@ -74,7 +75,6 @@
 5. _Setup githook_
   - Setup an account at [github](https://github.io)
   - remove current .git folder
-  - rename project in package.json (+author, description)
   - git add, commit, create repo, push...
   - add githook for before push - .git/hooks folder
 
