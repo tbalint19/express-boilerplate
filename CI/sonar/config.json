@@ -1,0 +1,11 @@
+{
+  "sonar.host.url": "https://sonarcloud.io",
+  "sonar.organization": "tbalint19",
+  "sonar.projectKey": "tbalint19_express-boilerplate",
+  "sonar.sources": "src",
+
+  "sonar.login": "34e00bc9e5b7c395b70cad658cfe40eef2c3eb5e",
+
+  "sonar.scm.forceReloadAll": "true",
+  "sonar.scm.exclusions.disabled": "false"
+}
