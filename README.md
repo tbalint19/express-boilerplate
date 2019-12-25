@@ -20,8 +20,8 @@
 ## Setup checklist
 
 1. _Setup app for local npm start_
+  - duplicate @config/test.js as @config/development.js
   - install dependencies
-  - duplicate @config/test.js as development.js
 
   ```bash
   npm i
@@ -32,7 +32,7 @@
 
 2. _Setup openID connect with google_
   - [Complete step 1, 2, 3 >>>](https://developers.google.com/identity/protocols/OpenIDConnect)
-  - update client_ID, client_secret and redirect_uri (can be anything for now) in config
+  - update client_ID, client_secret and redirect_uri (can be anything for now) in @config/production.js (and in other envs if needed)
 
   __-> OpenID works on the backed__
 
@@ -70,7 +70,12 @@
   - remove current .git folder
   - rename project in package.json (+author, description)
   - git add, commit, create repo, push...
-  - add githook for before push - .git/hooks folder (npm run ci)
+  - add githook for before push - .git/hooks folder
+
+  ```bash
+  #!/usr/bin/env bash
+  npm run ci
+  ```
 
   __-> Before all remote save the quality of the code is checked__
 
@@ -79,7 +84,7 @@
   - Edit @/CD/config.json
   - user is your dockerhub username
   - repo is the name of the project (whatever you choose)
-  - start from 0.0.1 but, does not really matter (will be autoincremented, not perfect for multiple users)
+  - tag is latest by default, automated versioning the images is not implemented here
 
   ```bash
   npm run cd
