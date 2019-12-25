@@ -20,21 +20,27 @@
 ## Setup checklist
 
 1. _Setup app for local npm start_
+  - rename app folder
   - duplicate @config/test.js as @config/development.js
   - install dependencies
 
   ```bash
+  mv express-boilerplate backend
+  cd backend
+  cp config/test.js config/development.js
   npm i
   npm start
   ```
 
   __-> APP is ready to run locally__
 
-2. _Setup openID connect with google_
-  - [Complete step 1, 2, 3 >>>](https://developers.google.com/identity/protocols/OpenIDConnect)
-  - update client_ID, client_secret and redirect_uri (can be anything for now) in @config/production.js (and in other envs if needed)
+2.  _Setup git_
+  - Setup an account at [github](https://github.io)
+  - remove current .git folder
+  - rename project in package.json (+author, description)
+  - git add, commit, create repo, push...
 
-  __-> OpenID works on the backed__
+  __-> code is versioned locally and remote__
 
 3. _Setup dev env - out-of-the-box working_
   - Run code format
@@ -65,7 +71,7 @@
 
   __-> App can be extended in a safe manner__
 
-5. _Setup git_
+5. _Setup githook_
   - Setup an account at [github](https://github.io)
   - remove current .git folder
   - rename project in package.json (+author, description)
@@ -95,3 +101,9 @@
 7. _Setup host - sloppy.io_
   - backend
   - database - [set container as host on admin for env var](https://kb.sloppy.io/en/articles/1346435-setting-up-postgresql-and-adminer-on-sloppy-io)
+
+8. _Setup openID connect with google_
+  - [Complete step 1, 2, 3 >>>](https://developers.google.com/identity/protocols/OpenIDConnect)
+  - update client_ID, client_secret and redirect_uri (can be anything for now) in @config/production.js (and in other envs if needed)
+
+  __-> OpenID works on the backed__
