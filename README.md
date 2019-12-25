@@ -37,6 +37,7 @@
 
 2.  _Setup git_
   - Setup an account at [github](https://github.io)
+  - (Shell github login is required)
   - remove current .git folder
   - rename project in package.json (+author, description)
   - git add, commit, create repo, push...
@@ -86,6 +87,7 @@
 
 6. _Setup docker_
   - Setup an account at [dockerhub](https://hub.docker.com)
+  - (Shell docker login is required)
   - Edit @/CD/config.json
   - user is your dockerhub username
   - repo is the name of the project (whatever you choose)
