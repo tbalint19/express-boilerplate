@@ -102,11 +102,19 @@
   __-> Releases are kept as images on docker hub__
 
 7. _Setup host - sloppy.io_
-  - backend
-  - database - [set container as host on admin for env var](https://kb.sloppy.io/en/articles/1346435-setting-up-postgresql-and-adminer-on-sloppy-io)
+  - Setup an account at [sloppy.io](https://admin.sloppy.io/)
+  - Create a project, name it, name the service, and add to app
+  - First the database - [set container as host on admin for env var](https://kb.sloppy.io/en/articles/1346435-setting-up-postgresql-and-adminer-on-sloppy-io)
+  - Then with [Add app], select the image, set the env vars...
+
+  __-> App is on the internet__
 
 8. _Setup openID connect with google_
-  - [Complete step 1, 2, 3 >>>](https://developers.google.com/identity/protocols/OpenIDConnect)
+  - Select project -> [New project](https://console.developers.google.com/)
+  - Oauth consent screen -> external
+  - Application name, authorized domains (.sloppy.zone)
+  - Credentials -[+ Create credentials] (Oauth2) -> Web app, set name & redirect uri (localhost or authorized domain) -> client_ID & client_secret
   - update client_ID, client_secret and redirect_uri (can be anything for now) in @config/production.js (and in other envs if needed)
+  - Full guide(https://developers.google.com/identity/protocols/OpenIDConnect)
 
   __-> OpenID works on the backed__
