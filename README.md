@@ -33,7 +33,7 @@
   npm start
   ```
 
-  __-> APP is ready to run locally__
+  __-> App is ready to run locally__
 
 2.  _Setup git_
   - Setup an account at [github](https://github.io)
@@ -58,11 +58,13 @@
 
 4. _Setup dev env -  sonar config_
   - Setup an account at [sonarcloud](https://sonarcloud.io)
+  - Connect to your github account
+  - Add your project from github: [+] -> Analyze new project -> Github app configuration -> Sonarcloud [Configure] -> Select repositories -> Save
   - Edit @/CI/sonar/config.json
   - sonar.organization is your username
-  - sonar.projectKey is user_name-of-your-choice
+  - sonar.projectKey is user_github-project-name
   - sonar.login: [Avatar] -> My account -> Security -> Generate
-  - gitgnore if needed (and use private sonar as well, if sensitive)
+  - gitignore if needed (and use private sonar as well, if sensitive)
 
   ```bash
   npm sonar-check
@@ -76,7 +78,7 @@
 5. _Setup githook_
   - create githook for before push - .git/hooks folder
   - delete the file extension for pre-push.sample (".sample")
-  - in the pre-push file:
+  - in the pre-push file (only this, delete what is currently there):
 
   ```bash
   #!/bin/sh
