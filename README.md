@@ -73,13 +73,12 @@
   __-> App can be extended in a safe manner__
 
 5. _Setup githook_
-  - Setup an account at [github](https://github.io)
-  - remove current .git folder
-  - git add, commit, create repo, push...
-  - add githook for before push - .git/hooks folder
+  - create githook for before push - .git/hooks folder
+  - delete the file extension for pre-push.sample (".sample")
+  - in the pre-push file:
 
   ```bash
-  #!/usr/bin/env bash
+  #!/bin/sh
   npm run ci
   ```
 
