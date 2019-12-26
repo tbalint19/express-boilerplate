@@ -39,7 +39,6 @@
   - Setup an account at [github](https://github.io)
   - (Shell github login is required)
   - remove current .git folder
-  - rename project in package.json (+author, description)
   - git add, commit, create repo, push...
 
   __-> code is versioned locally and remote__
