@@ -23,7 +23,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(logger({ persist: true }))
 app.use(logger({ persist: false }))
-app.use(cors({ origin: 'http://localhost:8080' }))
+app.use(cors())
 app.use(authMiddleware)
 // use middleware
 
