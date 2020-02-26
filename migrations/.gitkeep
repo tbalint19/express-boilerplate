@@ -1,0 +1,27 @@
+Create migration (alter table):
+1. create script - will create xxxx.xx.xx-name_of_your_migration.js
+$ sequelize migration:create --name name_of_your_migration
+
+2. create up and down
+module.exports = {
+  up: function(queryInterface, Sequelize) {
+    // logic for transforming into the new state
+    return queryInterface.addColumn(
+      'Todo',
+      'completed',
+     Sequelize.BOOLEAN
+    );
+
+  },
+
+  down: function(queryInterface, Sequelize) {
+    // logic for reverting the changes
+    return queryInterface.removeColumn(
+      'Todo',
+      'completed'
+    );
+  }
+}
+
+3. execute migration
+$ npm run migrate

@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "migrate": "node_modules/.bin/sequelize db:migrate",
-    "reset": "node ./migrations/resetDB.js",
+    "reset": "node ./scripts/resetDB.js",
     "start": "cross-env NODE_ENV=development DEBUG=app node ./bin/www",
     "prod": "cross-env NODE_ENV=production node ./bin/www",
     "format": "./node_modules/.bin/prettier --write '{src,test}/**/*'",
