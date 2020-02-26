@@ -22,7 +22,16 @@ describe('User endpoint tests', () => {
     const response = await loginWithoutAuthCode()
 
     // then
-    expect(response.status).toBe(401)
+    expect(response.status).toBe(422)
+    expect(response.body).toEqual({
+      errors: [
+        {
+          msg: 'Invalid value',
+          param: 'authorizationCode',
+          location: 'body',
+        },
+      ],
+    })
   })
 
   it('should not login without google auth', async () => {
@@ -130,7 +139,7 @@ describe('User endpoint tests', () => {
       })
 
       // then
-      expect(response.status).toBe(200)
+      expect(response.status).toBe(204)
 
       const blacklistedUser = await models.User.findOne({
         where: { email: users[target].email },

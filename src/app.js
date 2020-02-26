@@ -7,13 +7,13 @@ const { createMiddleware } = require('@promster/express')
 const config = require(__dirname + '/../config')
 
 const errorHandler = require('./middleware/errorHandler')
-const authMiddleware = require('./middleware/authMiddleware')
+const sessionUserResolver = require('./middleware/sessionUserResolver')
 const logger = require('./middleware/logger')
 // require middleware
 
 const user = require('./routes/user')
 const role = require('./routes/role')
-const prometheus = require('./routes/actuator/prometheus')
+const prometheus = require('./routes/actuator')
 // require routes
 
 const app = express()
@@ -21,10 +21,10 @@ const app = express()
 app.use(createMiddleware({ app, options: config['prometheus'] }))
 app.use(bodyParser.json())
 app.use(cookieParser())
-app.use(logger({ persist: true }))
+//app.use(logger({ persist: true }))
 app.use(logger({ persist: false }))
 app.use(cors())
-app.use(authMiddleware)
+app.use(sessionUserResolver)
 // use middleware
 
 app.use('/api/user', user)

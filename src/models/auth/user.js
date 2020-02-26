@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     models.User.hasMany(models.Permission)
-    models.User.hasOne(models.Role)
+    models.User.hasMany(models.Role)
   }
 
   return User

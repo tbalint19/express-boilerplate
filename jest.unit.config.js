@@ -3,6 +3,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     "src/utils/*.js",
+    "src/middleware/authorization/*.js",
     "!**/node_modules/**"
   ],
   coverageReporters: [

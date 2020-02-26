@@ -2,7 +2,7 @@ var pg = require('pg')
 
 module.exports = {
 
-  'database': {
+  'db': {
     dialect: "sqlite",
     storage: ":memory:",
     logging: false

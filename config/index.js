@@ -34,4 +34,4 @@ Fix:
 (${env}.js will be gitignored)
 `
 
-module.exports = appConfig
+module.exports = { ...appConfig, ...appConfig['db'] }
