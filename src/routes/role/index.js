@@ -14,11 +14,7 @@ router.post('/admin', [
   authorize(is('ROOT')),
   validate(body('email').isEmail()),
   findTargetUser(),
-  authorize(
-    is('ROOT').when(
-      (req, res) => res.locals.userRole && res.locals.userRole.name == 'ROOT'
-    )
-  ),
+  authorize(is('ROOT').when((req, res) => res.locals.targetIsRoot)),
   assignRole(),
 ])
 

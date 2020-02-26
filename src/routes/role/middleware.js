@@ -5,8 +5,8 @@ const findTargetUser = (opts) => async (req, res, next) => {
   res.locals.target = await models.User.findOne({ where: { email } })
   if (res.locals.target) {
     const userRoles = await user.getRoles({ where: { scope: null } })
-    res.locals.userRole = userRoles[0]
-  }
+    res.locals.targetIsRoot = userRoles[0].name == 'ROOT'
+  } else res.locals.targetIsRoot = false
   next()
 }
 
