@@ -57,7 +57,7 @@ const createSessionToken = (opts) => async (req, res, next) => {
   if (existingUser.isBlacklisted) return res.sendStatus(401)
 
   const allRoles = await existingUser.getRoles()
-  const role = { name: allRoles.find((role) => !role.scope).name }
+  const role = { name: allRoles.find((entry) => !entry.scope).name }
   const allPermissions = await existingUser.getPermissions()
   const permissions = allPermissions
     .filter((permission) => !permission.scope)
