@@ -12,12 +12,7 @@ const { findTargetUser, assignRole } = require('./middleware')
 
 router.post('/admin', [
   authorize(is('ROOT')),
-  validate(
-    body('email')
-      .exists()
-      .bail()
-      .isEmail()
-  ),
+  validate(body('email').isEmail()),
   findTargetUser(),
   authorize(
     is('ROOT').when(

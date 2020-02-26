@@ -25,16 +25,7 @@ router.post('/login', [
 
 router.post('/blacklist', [
   authorize(isAuthenticated()),
-  validate(
-    body('email')
-      .exists()
-      .bail()
-      .isEmail(),
-    body('to')
-      .exists()
-      .bail()
-      .isBoolean()
-  ),
+  validate(body('email').isEmail(), body('to').isBoolean()),
   findTargetUser(),
   authorize(
     is('ROOT').when((req, res) => res.locals.userRole.name == 'ADMIN'),
