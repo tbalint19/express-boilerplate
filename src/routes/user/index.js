@@ -11,7 +11,7 @@ const {
 const {
   exchangeTokenForUserData,
   createUserIfNeeded,
-  updateDefaults,
+  updateUser,
   createSessionToken,
   findTargetUser,
   toggleTargetUser,
@@ -21,7 +21,7 @@ router.post('/login', [
   validate(body('authorizationCode').exists()),
   exchangeTokenForUserData(),
   createUserIfNeeded(),
-  updateDefaults(),
+  updateUser(),
   createSessionToken(),
 ])
 

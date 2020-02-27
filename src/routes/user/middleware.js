@@ -58,7 +58,7 @@ const createUserIfNeeded = (opts) => async (req, res, next) => {
   next()
 }
 
-const updateDefaults = (opts) => async (req, res, next) => {
+const updateUser = (opts) => async (req, res, next) => {
   const {
     googleId,
     email,
@@ -124,7 +124,7 @@ const toggleTargetUser = (opts) => async (req, res, next) => {
 module.exports = {
   exchangeTokenForUserData,
   createUserIfNeeded,
-  updateDefaults,
+  updateUser,
   createSessionToken,
   findTargetUser,
   toggleTargetUser,
