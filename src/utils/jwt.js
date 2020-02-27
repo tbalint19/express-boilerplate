@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const atob = require('atob')
 const jwtConfig = require('../../config')['jwt']
 
 const create = (payload) =>
@@ -18,10 +19,23 @@ const verify = (token) =>
     )
   )
 
+const b64DecodeUnicode = (str) => {
+  return decodeURIComponent(
+    atob(str)
+      .split('')
+      .map((char) => {
+        return '%' + ('00' + char.charCodeAt(0).toString(16)).slice(-2)
+      })
+      .join('')
+  )
+}
+
 const parse = (token) => {
   try {
-    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+    const decoded = b64DecodeUnicode(token.split('.')[1])
+    return JSON.parse(decoded)
   } catch (e) {
+    console.log(e)
     return null
   }
 }

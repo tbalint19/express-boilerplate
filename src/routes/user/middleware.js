@@ -16,20 +16,29 @@ const exchangeTokenForUserData = (opts) => async (req, res, next) => {
   res.locals.googleData = {
     googleId: userData.sub,
     email: userData.email,
+    picture: userData.picture,
+    firstName: userData.given_name,
+    lastName: userData.family_name,
   }
 
   next()
 }
 
 const createUserIfNeeded = (opts) => async (req, res, next) => {
-  const { googleId, email } = res.locals.googleData
+  const {
+    googleId,
+    email,
+    lastName,
+    firstName,
+    picture,
+  } = res.locals.googleData
 
   let existingUser = await models.User.findOne({ where: { googleId } })
 
   if (!existingUser) {
     await models.sequelize.transaction(async (transaction) => {
       existingUser = await models.User.create(
-        { googleId, email },
+        { googleId, email, lastName, firstName, picture },
         { transaction }
       )
       const [affectedRows] = await models.Role.update(
@@ -45,10 +54,24 @@ const createUserIfNeeded = (opts) => async (req, res, next) => {
     })
   }
 
-  if (existingUser.email != email)
-    await models.User.update({ email }, { where: { googleId } })
-
   res.locals.existingUser = existingUser
+  next()
+}
+
+const updateDefaults = (opts) => async (req, res, next) => {
+  const {
+    googleId,
+    email,
+    lastName,
+    firstName,
+    picture,
+  } = res.locals.googleData
+
+  await models.User.update(
+    { googleId, email, lastName, firstName, picture },
+    { where: { googleId } }
+  )
+
   next()
 }
 
@@ -69,6 +92,9 @@ const createSessionToken = (opts) => async (req, res, next) => {
     id: existingUser.id,
     googleId: existingUser.googleId,
     email: existingUser.email,
+    firstName: existingUser.firstName,
+    lastName: existingUser.lastName,
+    picture: existingUser.picture,
     role,
     permissions,
     groups,
@@ -98,6 +124,7 @@ const toggleTargetUser = (opts) => async (req, res, next) => {
 module.exports = {
   exchangeTokenForUserData,
   createUserIfNeeded,
+  updateDefaults,
   createSessionToken,
   findTargetUser,
   toggleTargetUser,

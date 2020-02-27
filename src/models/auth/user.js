@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false,
     },
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    picture: DataTypes.STRING,
   })
 
   User.associate = (models) => {
