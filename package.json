@@ -19,8 +19,8 @@
     "cicd": "npm run ci && npm run cd"
   },
   "dependencies": {
-    "@promster/express": "^3.2.0",
-    "@promster/server": "^3.2.0",
+    "@promster/express": "^4.1.2",
+    "@promster/server": "^4.2.2",
     "atob": "^2.1.2",
     "axios": "^0.19.0",
     "body-parser": "^1.18.2",
@@ -42,10 +42,10 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.17.0",
-    "jest": "^24.9.0",
+    "jest": "^25.4.0",
     "mockdate": "^2.0.5",
     "prettier": "1.18.2",
-    "sonarqube-scanner": "^2.4.1",
+    "sonarqube-scanner": "^2.6.0",
     "sqlite3": "^4.1.0",
     "supertest": "^4.0.0"
   }
