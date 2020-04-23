@@ -9,8 +9,8 @@ const {
 
 const processReports = () => {
   // An instant request for the report returns the "old" result
-  setTimeout(processBugReport, 1000)
-  setTimeout(processDuplicationsReport, 1000)
+  setTimeout(processBugReport, 5000)
+  setTimeout(processDuplicationsReport, 5000)
 }
 
 sonarAnalysis(processReports)
